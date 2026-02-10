@@ -395,6 +395,47 @@
             opacity: 0.5;
         }
 
+        .sell-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(145deg, #ff6600, #cc5200);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            margin-top: 5px;
+        }
+
+        .sell-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #ff8833, #dd6611);
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .sell-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .sell-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
         .customize-button {
             background: linear-gradient(145deg, #ff00ff, #cc00cc);
         }
@@ -976,6 +1017,67 @@
                 }
             };
 
+            const sellUpgrade = (upgradeId) => {
+                const upgrade = BASE_UPGRADES.find(u => u.id === upgradeId);
+                if (!upgrade || upgrade.isCustom) return;
+
+                const currentUpgrade = upgrades[upgradeId];
+                if (!currentUpgrade || currentUpgrade.count === 0) return;
+
+                // Calculate sell price (50% of current cost before this upgrade was bought)
+                const previousCost = Math.floor(currentUpgrade.currentCost / 1.15);
+                const sellPrice = Math.floor(previousCost * 0.5);
+                
+                setBits(prev => prev + sellPrice);
+                setUpgrades(prev => ({
+                    ...prev,
+                    [upgradeId]: {
+                        count: currentUpgrade.count - 1,
+                        currentCost: previousCost
+                    }
+                }));
+            };
+
+            const sellClickUpgrade = (upgradeId) => {
+                const upgrade = CLICK_UPGRADES.find(u => u.id === upgradeId);
+                if (!upgrade) return;
+
+                const currentUpgrade = clickUpgrades[upgradeId];
+                if (!currentUpgrade || currentUpgrade.count === 0) return;
+
+                // Calculate sell price (50% of current cost before this upgrade was bought)
+                const previousCost = Math.floor(currentUpgrade.currentCost / 1.15);
+                const sellPrice = Math.floor(previousCost * 0.5);
+                
+                setBits(prev => prev + sellPrice);
+                setClickUpgrades(prev => ({
+                    ...prev,
+                    [upgradeId]: {
+                        count: currentUpgrade.count - 1,
+                        currentCost: previousCost
+                    }
+                }));
+            };
+
+            const sellCustomPC = (index) => {
+                if (index < 0 || index >= customPCs.length) return;
+                
+                const pc = customPCs[index];
+                const sellPrice = Math.floor(pc.cost * 0.5);
+                
+                setBits(prev => prev + sellPrice);
+                setCustomPCs(prev => prev.filter((_, i) => i !== index));
+                
+                // Update custom PC count in upgrades
+                setUpgrades(prev => ({
+                    ...prev,
+                    custompc: {
+                        count: Math.max(0, (prev.custompc?.count || 0) - 1),
+                        currentCost: 0
+                    }
+                }));
+            };
+
             const openPCBuilder = () => {
                 setShowBuilder(true);
             };
@@ -1133,6 +1235,15 @@
                                     >
                                         BUY - {formatNumber(currentUpgrade.currentCost)} bits
                                     </button>
+                                    
+                                    {currentUpgrade.count > 0 && (
+                                        <button 
+                                            className="sell-button"
+                                            onClick={() => sellClickUpgrade(upgrade.id)}
+                                        >
+                                            SELL - +{formatNumber(Math.floor((currentUpgrade.currentCost / 1.15) * 0.5))} bits
+                                        </button>
+                                    )}
                                 </div>
                             );
                         })}
@@ -1196,6 +1307,15 @@
                                     >
                                         BUY - {formatNumber(currentUpgrade.currentCost)} bits
                                     </button>
+                                    
+                                    {currentUpgrade.count > 0 && (
+                                        <button 
+                                            className="sell-button"
+                                            onClick={() => sellUpgrade(upgrade.id)}
+                                        >
+                                            SELL - +{formatNumber(Math.floor((currentUpgrade.currentCost / 1.15) * 0.5))} bits
+                                        </button>
+                                    )}
                                 </div>
                             );
                         })}
@@ -1222,8 +1342,15 @@
                                     
                                     <div className="upgrade-stats">
                                         <div>Income: +{formatNumber(pc.bps)}/s</div>
-                                        <div>Cost: {formatNumber(pc.cost)} bits</div>
+                                        <div>Build Cost: {formatNumber(pc.cost)} bits</div>
                                     </div>
+
+                                    <button 
+                                        className="sell-button"
+                                        onClick={() => sellCustomPC(index)}
+                                    >
+                                        SELL - +{formatNumber(Math.floor(pc.cost * 0.5))} bits
+                                    </button>
 
                                     <div className="custom-pc-tooltip">
                                         <div className="tooltip-header">PC Components</div>

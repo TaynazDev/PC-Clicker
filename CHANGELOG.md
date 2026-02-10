@@ -2,6 +2,12 @@
 
 ## Latest Updates
 
+### New Features
+- **Sell Upgrades** - You can now sell any upgrade (Click Power, Base Upgrades, or Custom PCs) for 50% of their cost
+  - Sell buttons appear below buy buttons when you own at least one upgrade
+  - Selling reduces the upgrade count and refunds bits
+  - Useful for optimizing your build or recovering bits from early purchases
+
 ### Visual Improvements
 - Added animated GIF background (36013.gif) with adjustable transparency overlay
 - Replaced center PC sprite with clickable motherboard image (motherboard.webp)
