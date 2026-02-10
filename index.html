@@ -678,6 +678,232 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #00ffaa;
         }
+
+        /* Flying Dhahab styles */
+        .flying-dhahab {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            z-index: 200;
+            animation: fly-around 12s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
+            transition: transform 0.1s;
+            padding: 10px;
+            pointer-events: auto;
+        }
+
+        .flying-dhahab:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1));
+        }
+
+        .flying-dhahab:active {
+            transform: scale(1.4);
+        }
+
+        .flying-dhahab img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        @keyframes fly-around {
+            0% {
+                left: -100px;
+                top: 20%;
+            }
+            25% {
+                left: 50%;
+                top: 10%;
+            }
+            50% {
+                left: 100%;
+                top: 30%;
+            }
+            75% {
+                left: 50%;
+                top: 50%;
+            }
+            100% {
+                left: -100px;
+                top: 20%;
+            }
+        }
+
+        /* Frenzy mode styles */
+        .frenzy-mode {
+            animation: frenzy-pulse 0.5s ease-in-out infinite;
+        }
+
+        @keyframes frenzy-pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+                border-color: #ffd700;
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255, 215, 0, 1);
+                border-color: #ffed4e;
+            }
+        }
+
+        .frenzy-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 5;
+            animation: frenzy-flash 1s ease-in-out infinite;
+        }
+
+        @keyframes frenzy-flash {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .frenzy-timer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 1),
+                         0 0 60px rgba(255, 215, 0, 0.8);
+            pointer-events: none;
+            z-index: 300;
+            animation: timer-bounce 0.5s ease-in-out;
+        }
+
+        @keyframes timer-bounce {
+            0% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .frenzy-notification {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.95);
+            color: #000;
+            padding: 30px 60px;
+            border-radius: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 1);
+            z-index: 250;
+            animation: notification-popup 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .frenzy-notification-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 1));
+        }
+
+        @keyframes notification-popup {
+            0% { 
+                transform: translateX(-50%) scale(0);
+                opacity: 0;
+            }
+            100% { 
+                transform: translateX(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Raining Dhahab particles */
+        .raining-dhahab {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 150;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+
+        .raining-dhahab img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: spin-fall 3s linear forwards;
+        }
+
+        @keyframes spin-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(720deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Flying Threadripper styles */
+        .flying-threadripper {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            z-index: 200;
+            animation: fly-around-reverse 12s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.9));
+            transition: transform 0.1s;
+            padding: 10px;
+            pointer-events: auto;
+        }
+
+        .flying-threadripper:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 1));
+        }
+
+        .flying-threadripper:active {
+            transform: scale(1.4);
+        }
+
+        .flying-threadripper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        @keyframes fly-around-reverse {
+            0% {
+                right: -120px;
+                top: 30%;
+            }
+            25% {
+                right: 50%;
+                top: 20%;
+            }
+            50% {
+                right: 100%;
+                top: 40%;
+            }
+            75% {
+                right: 50%;
+                top: 60%;
+            }
+            100% {
+                right: -120px;
+                top: 30%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -826,6 +1052,15 @@
                 icon: '⚛️',
                 image: 'qantum computer.png',
                 description: 'Beyond conventional computing'
+            },
+            { 
+                id: 'everything', 
+                name: 'Everything', 
+                baseCost: 10000000000, 
+                baseBps: 50000000000, 
+                icon: '❓',
+                image: 'everything.png',
+                description: 'The ultimate achievement'
             }
         ];
 
@@ -881,26 +1116,94 @@
             }
         ];
 
+        // Computer Overclocker Upgrades
+        const OVERCLOCKER_UPGRADES = [
+            {
+                id: 'oldpc_overclock',
+                name: 'Really Old PC Overclocker',
+                baseCost: 100,
+                targetComputer: 'oldpc',
+                icon: '⚡',
+                description: 'Doubles Really Old PC production'
+            },
+            {
+                id: 'raspberrypi_overclock',
+                name: 'Raspberry Pi Overclocker',
+                baseCost: 500,
+                targetComputer: 'raspberrypi',
+                icon: '⚡',
+                description: 'Doubles Raspberry Pi production'
+            },
+            {
+                id: 'server_overclock',
+                name: 'Server Overclocker',
+                baseCost: 50000,
+                targetComputer: 'server',
+                icon: '⚡',
+                description: 'Doubles Server production'
+            },
+            {
+                id: 'datacenter_overclock',
+                name: 'Data Center Overclocker',
+                baseCost: 300000,
+                targetComputer: 'datacenter',
+                icon: '⚡',
+                description: 'Doubles Data Center production'
+            },
+            {
+                id: 'supercomputer_overclock',
+                name: 'Supercomputer Overclocker',
+                baseCost: 1500000,
+                targetComputer: 'supercomputer',
+                icon: '⚡',
+                description: 'Doubles Supercomputer production'
+            },
+            {
+                id: 'quantum_overclock',
+                name: 'Quantum Computer Overclocker',
+                baseCost: 15000000,
+                targetComputer: 'quantum',
+                icon: '⚡',
+                description: 'Doubles Quantum Computer production'
+            },
+            {
+                id: 'everything_overclock',
+                name: 'Everything Overclocker',
+                baseCost: 100000000000,
+                targetComputer: 'everything',
+                icon: '⚡',
+                description: 'Doubles Everything production'
+            }
+        ];
+
         function App() {
             const [bits, setBits] = useState(0);
             const [totalBps, setTotalBps] = useState(0);
             const [clickPower, setClickPower] = useState(1);
             const [upgrades, setUpgrades] = useState({});
             const [clickUpgrades, setClickUpgrades] = useState({});
+            const [overclockerUpgrades, setOverclockerUpgrades] = useState({});
             const [customPCs, setCustomPCs] = useState([]);
             const [partPurchaseCounts, setPartPurchaseCounts] = useState({});
             const [showBuilder, setShowBuilder] = useState(false);
             const [clickEffects, setClickEffects] = useState([]);
+            const [showDhahab, setShowDhahab] = useState(false);
+            const [dhahabPosition, setDhahabPosition] = useState({ left: 0, top: 0 });
+            const [frenzyActive, setFrenzyActive] = useState(false);
+            const [frenzyTimeLeft, setFrenzyTimeLeft] = useState(0);
+            const [rainingDhahabs, setRainingDhahabs] = useState([]);
+            const [showThreadripper, setShowThreadripper] = useState(false);
             const gameWorldRef = useRef(null);
 
             // Initialize game state from localStorage
             useEffect(() => {
                 const savedState = localStorage.getItem('pcClickerSave');
                 if (savedState) {
-                    const { bits: savedBits, upgrades: savedUpgrades, clickUpgrades: savedClickUpgrades, customPCs: savedCustomPCs, partPurchaseCounts: savedCounts, clickPower: savedClickPower } = JSON.parse(savedState);
+                    const { bits: savedBits, upgrades: savedUpgrades, clickUpgrades: savedClickUpgrades, overclockerUpgrades: savedOverclockers, customPCs: savedCustomPCs, partPurchaseCounts: savedCounts, clickPower: savedClickPower } = JSON.parse(savedState);
                     setBits(savedBits || 0);
                     setUpgrades(savedUpgrades || {});
                     setClickUpgrades(savedClickUpgrades || {});
+                    setOverclockerUpgrades(savedOverclockers || {});
                     setCustomPCs(savedCustomPCs || []);
                     setPartPurchaseCounts(savedCounts || {});
                     setClickPower(savedClickPower || 1);
@@ -922,10 +1225,19 @@
             useEffect(() => {
                 let total = 0;
                 
-                // Regular upgrades
+                // Regular upgrades with overclocker multipliers
                 BASE_UPGRADES.forEach(upgrade => {
                     if (!upgrade.isCustom && upgrades[upgrade.id]) {
-                        total += upgrade.baseBps * upgrades[upgrade.id].count;
+                        let bps = upgrade.baseBps * upgrades[upgrade.id].count;
+                        
+                        // Apply overclocker multiplier (each overclocker doubles the production)
+                        const overclockerId = `${upgrade.id}_overclock`;
+                        const overclockerCount = overclockerUpgrades[overclockerId]?.count || 0;
+                        if (overclockerCount > 0) {
+                            bps *= Math.pow(2, overclockerCount);
+                        }
+                        
+                        total += bps;
                     }
                 });
 
@@ -935,17 +1247,18 @@
                 });
 
                 setTotalBps(total);
-            }, [upgrades, customPCs]);
+            }, [upgrades, customPCs, overclockerUpgrades]);
 
             // Passive income (update 10 times per second)
             useEffect(() => {
                 const interval = setInterval(() => {
                     if (totalBps > 0) {
-                        setBits(prev => prev + totalBps / 10);
+                        const multiplier = frenzyActive ? 2 : 1;
+                        setBits(prev => prev + (totalBps * multiplier) / 10);
                     }
                 }, 100);
                 return () => clearInterval(interval);
-            }, [totalBps]);
+            }, [totalBps, frenzyActive]);
 
             // Save game state
             useEffect(() => {
@@ -953,15 +1266,112 @@
                     bits,
                     upgrades,
                     clickUpgrades,
+                    overclockerUpgrades,
                     customPCs,
                     partPurchaseCounts,
                     clickPower
                 };
                 localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
-            }, [bits, upgrades, clickUpgrades, customPCs, partPurchaseCounts, clickPower]);
+            }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower]);
+
+            // Random dhahab spawning (rare chance)
+            useEffect(() => {
+                if (frenzyActive || showDhahab) return;
+                
+                const checkSpawn = () => {
+                    // 5% chance every 3 seconds
+                    const shouldSpawn = Math.random() < 0.05;
+                    if (shouldSpawn) {
+                        setShowDhahab(true);
+                        // Auto-hide after 8 seconds if not clicked
+                        setTimeout(() => {
+                            setShowDhahab(false);
+                        }, 8000);
+                    }
+                };
+                
+                const interval = setInterval(checkSpawn, 3000);
+                return () => clearInterval(interval);
+            }, [frenzyActive, showDhahab]);
+
+            // Random threadripper spawning
+            useEffect(() => {
+                if (showThreadripper) return;
+                
+                const checkSpawn = () => {
+                    // 2% chance every 3 seconds
+                    const shouldSpawn = Math.random() < 0.02;
+                    if (shouldSpawn) {
+                        setShowThreadripper(true);
+                        // Auto-hide after 12 seconds if not clicked
+                        setTimeout(() => {
+                            setShowThreadripper(false);
+                        }, 12000);
+                    }
+                };
+                
+                const interval = setInterval(checkSpawn, 3000);
+                return () => clearInterval(interval);
+            }, [showThreadripper]);
+
+            // Frenzy timer countdown
+            useEffect(() => {
+                if (!frenzyActive || frenzyTimeLeft <= 0) return;
+                
+                const interval = setInterval(() => {
+                    setFrenzyTimeLeft(prev => {
+                        if (prev <= 1) {
+                            setFrenzyActive(false);
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+                
+                return () => clearInterval(interval);
+            }, [frenzyActive, frenzyTimeLeft]);
+
+            // Continuously spawn raining dhahabs during frenzy
+            useEffect(() => {
+                if (!frenzyActive) {
+                    setRainingDhahabs([]);
+                    return;
+                }
+                
+                const spawnDhahab = () => {
+                    const newParticles = [];
+                    for (let i = 0; i < 5; i++) {
+                        newParticles.push({
+                            id: Date.now() + Math.random() + i,
+                            left: Math.random() * 100,
+                            delay: Math.random() * 0.5
+                        });
+                    }
+                    
+                    setRainingDhahabs(prev => {
+                        // Keep only recent particles (remove old ones)
+                        const now = Date.now();
+                        const filtered = prev.filter(p => now - p.id < 3000);
+                        return [...filtered, ...newParticles];
+                    });
+                };
+                
+                // Spawn immediately
+                spawnDhahab();
+                
+                // Continue spawning every 500ms during frenzy
+                const interval = setInterval(spawnDhahab, 500);
+                
+                return () => {
+                    clearInterval(interval);
+                    setTimeout(() => setRainingDhahabs([]), 3000);
+                };
+            }, [frenzyActive]);
 
             const handlePCClick = (e) => {
-                setBits(prev => prev + clickPower);
+                const multiplier = frenzyActive ? 2 : 1;
+                const clickValue = clickPower * multiplier;
+                setBits(prev => prev + clickValue);
                 
                 // Create click effect
                 if (gameWorldRef.current) {
@@ -970,11 +1380,48 @@
                         id: Date.now() + Math.random(),
                         x: e.clientX - rect.left,
                         y: e.clientY - rect.top,
-                        value: clickPower
+                        value: clickValue,
+                        image: frenzyActive ? "dhahab pc.png" : "motherboard.webp"
                     };
                     setClickEffects(prev => [...prev, effect]);
                     
                     // Remove effect after animation
+                    setTimeout(() => {
+                        setClickEffects(prev => prev.filter(eff => eff.id !== effect.id));
+                    }, 1000);
+                }
+            };
+
+            const handleDhahabClick = (e) => {
+                e.stopPropagation();
+                setShowDhahab(false);
+                setFrenzyActive(true);
+                setFrenzyTimeLeft(20);
+            };
+
+            const handleThreadripperClick = (e) => {
+                e.stopPropagation();
+                setShowThreadripper(false);
+                
+                // Double the current bits
+                let bonusBits = 0;
+                setBits(prev => {
+                    bonusBits = prev; // Store current amount to show in effect
+                    return prev * 2;
+                });
+                
+                // Create a big click effect
+                if (gameWorldRef.current) {
+                    const rect = gameWorldRef.current.getBoundingClientRect();
+                    const effect = {
+                        id: Date.now() + Math.random(),
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top,
+                        value: bonusBits,
+                        image: "threadripper.png"
+                    };
+                    setClickEffects(prev => [...prev, effect]);
+                    
                     setTimeout(() => {
                         setClickEffects(prev => prev.filter(eff => eff.id !== effect.id));
                     }, 1000);
@@ -1025,15 +1472,17 @@
                 if (!currentUpgrade || currentUpgrade.count === 0) return;
 
                 // Calculate sell price (50% of current cost before this upgrade was bought)
-                const previousCost = Math.floor(currentUpgrade.currentCost / 1.15);
+                const previousCost = Math.max(upgrade.baseCost, Math.floor(currentUpgrade.currentCost / 1.15));
                 const sellPrice = Math.floor(previousCost * 0.5);
+                const newCount = currentUpgrade.count - 1;
                 
                 setBits(prev => prev + sellPrice);
                 setUpgrades(prev => ({
                     ...prev,
                     [upgradeId]: {
-                        count: currentUpgrade.count - 1,
-                        currentCost: previousCost
+                        count: newCount,
+                        // Reset to base cost if count reaches 0
+                        currentCost: newCount === 0 ? upgrade.baseCost : previousCost
                     }
                 }));
             };
@@ -1046,15 +1495,57 @@
                 if (!currentUpgrade || currentUpgrade.count === 0) return;
 
                 // Calculate sell price (50% of current cost before this upgrade was bought)
-                const previousCost = Math.floor(currentUpgrade.currentCost / 1.15);
+                const previousCost = Math.max(upgrade.baseCost, Math.floor(currentUpgrade.currentCost / 1.15));
                 const sellPrice = Math.floor(previousCost * 0.5);
+                const newCount = currentUpgrade.count - 1;
                 
                 setBits(prev => prev + sellPrice);
                 setClickUpgrades(prev => ({
                     ...prev,
                     [upgradeId]: {
-                        count: currentUpgrade.count - 1,
-                        currentCost: previousCost
+                        count: newCount,
+                        // Reset to base cost if count reaches 0
+                        currentCost: newCount === 0 ? upgrade.baseCost : previousCost
+                    }
+                }));
+            };
+
+            const buyOverclocker = (overclockerId) => {
+                const overclocker = OVERCLOCKER_UPGRADES.find(u => u.id === overclockerId);
+                if (!overclocker) return;
+
+                const currentOverclocker = overclockerUpgrades[overclockerId] || { count: 0, currentCost: overclocker.baseCost };
+                
+                if (bits >= currentOverclocker.currentCost) {
+                    setBits(prev => prev - currentOverclocker.currentCost);
+                    setOverclockerUpgrades(prev => ({
+                        ...prev,
+                        [overclockerId]: {
+                            count: currentOverclocker.count + 1,
+                            currentCost: currentOverclocker.currentCost * 2  // Double the cost
+                        }
+                    }));
+                }
+            };
+
+            const sellOverclocker = (overclockerId) => {
+                const overclocker = OVERCLOCKER_UPGRADES.find(u => u.id === overclockerId);
+                if (!overclocker) return;
+
+                const currentOverclocker = overclockerUpgrades[overclockerId];
+                if (!currentOverclocker || currentOverclocker.count === 0) return;
+
+                // Calculate sell price (50% of current cost before this overclocker was bought)
+                const previousCost = Math.max(overclocker.baseCost, Math.floor(currentOverclocker.currentCost / 2));
+                const sellPrice = Math.floor(previousCost * 0.5);
+                const newCount = currentOverclocker.count - 1;
+                
+                setBits(prev => prev + sellPrice);
+                setOverclockerUpgrades(prev => ({
+                    ...prev,
+                    [overclockerId]: {
+                        count: newCount,
+                        currentCost: newCount === 0 ? overclocker.baseCost : previousCost
                     }
                 }));
             };
@@ -1125,6 +1616,7 @@
                     setClickPower(1);
                     setUpgrades({});
                     setClickUpgrades({});
+                    setOverclockerUpgrades({});
                     setCustomPCs([]);
                     setPartPurchaseCounts({});
                     setClickEffects([]);
@@ -1141,11 +1633,11 @@
                         </div>
                         <div className="stat">
                             <div className="stat-label">BITS PER CLICK</div>
-                            <div className="stat-value">{formatNumber(clickPower)}</div>
+                            <div className="stat-value">{formatNumber(clickPower * (frenzyActive ? 2 : 1))}</div>
                         </div>
                         <div className="stat">
                             <div className="stat-label">BITS PER SECOND</div>
-                            <div className="stat-value">{formatNumber(totalBps)}</div>
+                            <div className="stat-value">{formatNumber(totalBps * (frenzyActive ? 2 : 1))}</div>
                         </div>
                         <button className="restart-button" onClick={restartGame}>
                             🔄 RESTART GAME
@@ -1153,9 +1645,47 @@
                     </div>
 
                     <div className="game-world" ref={gameWorldRef}>
-                        <div className="main-pc" onClick={handlePCClick}>
+                        {frenzyActive && <div className="frenzy-overlay"></div>}
+                        {frenzyActive && (
+                            <div>
+                                <div className="frenzy-notification">
+                                    <img src="dhahab.png" alt="" className="frenzy-notification-icon" />
+                                    DHAHAB FRENZY!
+                                    <img src="dhahab.png" alt="" className="frenzy-notification-icon" />
+                                </div>
+                                <div className="frenzy-timer">{frenzyTimeLeft}s</div>
+                            </div>
+                        )}
+                        
+                        {rainingDhahabs.map(particle => (
+                            <div 
+                                key={particle.id}
+                                className="raining-dhahab"
+                                style={{ 
+                                    left: `${particle.left}%`,
+                                    top: 0,
+                                    animationDelay: `${particle.delay}s`
+                                }}
+                            >
+                                <img src="dhahab.png" alt="" />
+                            </div>
+                        ))}
+                        
+                        {showDhahab && !frenzyActive && (
+                            <div className="flying-dhahab" onClick={handleDhahabClick}>
+                                <img src="dhahab.png" alt="Golden PC" />
+                            </div>
+                        )}
+                        
+                        {showThreadripper && (
+                            <div className="flying-threadripper" onClick={handleThreadripperClick}>
+                                <img src="threadripper.png" alt="Threadripper" />
+                            </div>
+                        )}
+                        
+                        <div className={`main-pc ${frenzyActive ? 'frenzy-mode' : ''}`} onClick={handlePCClick}>
                             <div className="pc-sprite">
-                                <img src="motherboard.webp" alt="Motherboard" />
+                                <img src={frenzyActive ? "dhahab pc.png" : "motherboard.webp"} alt="Motherboard" />
                             </div>
                         </div>
 
@@ -1165,8 +1695,8 @@
                                 className="click-effect"
                                 style={{ left: effect.x, top: effect.y }}
                             >
-                                <img src="motherboard.webp" alt="" className="click-effect-image" />
-                                <span>+{effect.value}</span>
+                                <img src={effect.image || "motherboard.webp"} alt="" className="click-effect-image" />
+                                <span>+{formatNumber(effect.value)}</span>
                             </div>
                         ))}
 
@@ -1177,10 +1707,15 @@
                                 
                                 if (count === 0) return null;
                                 
+                                // "everything" shows actual image once owned
+                                const displayImage = upgrade.image;
+                                
                                 return (
                                     <div key={upgrade.id} className="upgrade-sprite">
-                                        {upgrade.image ? (
-                                            <img src={upgrade.image} alt={upgrade.name} className="upgrade-sprite-image" />
+                                        {frenzyActive ? (
+                                            <img src="dhahab pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
+                                        ) : displayImage ? (
+                                            <img src={displayImage} alt={upgrade.name} className="upgrade-sprite-image" />
                                         ) : (
                                             <div className="upgrade-sprite-icon">{upgrade.icon}</div>
                                         )}
@@ -1193,7 +1728,9 @@
                                 const caseImage = caseIndex !== null ? PC_PARTS.case[caseIndex].image : null;
                                 return (
                                     <div key={`custom-${index}`} className="upgrade-sprite">
-                                        {caseImage ? (
+                                        {frenzyActive ? (
+                                            <img src="dhahab pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
+                                        ) : caseImage ? (
                                             <img src={caseImage} alt="Custom PC" className="upgrade-sprite-image" />
                                         ) : (
                                             <div className="upgrade-sprite-icon">🔧</div>
@@ -1248,7 +1785,7 @@
                             );
                         })}
 
-                        <h2 style={{marginTop: '20px'}}>UPGRADES</h2>
+                        <h2 style={{marginTop: '20px'}}>COMPUTERS</h2>
                         {BASE_UPGRADES.map(upgrade => {
                             if (upgrade.isCustom) {
                                 return (
@@ -1280,24 +1817,32 @@
                                 currentCost: upgrade.baseCost 
                             };
                             const canAfford = bits >= currentUpgrade.currentCost;
+                            
+                            // Hide details for "everything" upgrade if player has less than 10B bits AND doesn't own it yet
+                            const isEverythingLocked = upgrade.id === 'everything' && bits < 10000000000 && currentUpgrade.count === 0;
+                            const displayName = isEverythingLocked ? '???' : upgrade.name;
+                            const displayDescription = isEverythingLocked ? '???' : upgrade.description;
+                            const displayImage = isEverythingLocked ? 'hmm.png' : upgrade.image;
+                            const displayIcon = isEverythingLocked ? '❓' : upgrade.icon;
+                            const displayBps = isEverythingLocked ? '???' : formatNumber(upgrade.baseBps);
 
                             return (
                                 <div key={upgrade.id} className="upgrade-item">
                                     <div className="upgrade-header">
-                                        {upgrade.image ? (
-                                            <img src={upgrade.image} alt={upgrade.name} className="upgrade-icon-img" />
+                                        {displayImage ? (
+                                            <img src={displayImage} alt={displayName} className="upgrade-icon-img" />
                                         ) : (
-                                            <div className="upgrade-icon">{upgrade.icon}</div>
+                                            <div className="upgrade-icon">{displayIcon}</div>
                                         )}
                                         <div className="upgrade-info">
-                                            <div className="upgrade-name">{upgrade.name}</div>
-                                            <div className="upgrade-details">{upgrade.description}</div>
+                                            <div className="upgrade-name">{displayName}</div>
+                                            <div className="upgrade-details">{displayDescription}</div>
                                         </div>
                                     </div>
                                     
                                     <div className="upgrade-stats">
                                         <div>Owned: {currentUpgrade.count}</div>
-                                        <div>Income: +{formatNumber(upgrade.baseBps)}/s</div>
+                                        <div>Income: +{displayBps}/s</div>
                                     </div>
                                     
                                     <button 
@@ -1314,6 +1859,65 @@
                                             onClick={() => sellUpgrade(upgrade.id)}
                                         >
                                             SELL - +{formatNumber(Math.floor((currentUpgrade.currentCost / 1.15) * 0.5))} bits
+                                        </button>
+                                    )}
+                                </div>
+                            );
+                        })}
+                        
+                        <h2 style={{marginTop: '20px'}}>COMPUTER OVERCLOCKERS</h2>
+                        {OVERCLOCKER_UPGRADES.map(overclocker => {
+                            // Hide everything overclocker until everything computer is bought
+                            if (overclocker.id === 'everything_overclock') {
+                                const everythingCount = upgrades['everything']?.count || 0;
+                                if (everythingCount === 0) return null;
+                            }
+                            
+                            const currentOverclocker = overclockerUpgrades[overclocker.id] || { 
+                                count: 0, 
+                                currentCost: overclocker.baseCost 
+                            };
+                            const canAfford = bits >= currentOverclocker.currentCost;
+                            
+                            // Check if player owns the target computer
+                            const targetComputerCount = upgrades[overclocker.targetComputer]?.count || 0;
+                            const hasTargetComputer = targetComputerCount > 0;
+
+                            return (
+                                <div key={overclocker.id} className="upgrade-item">
+                                    <div className="upgrade-header">
+                                        <div className="upgrade-icon">{overclocker.icon}</div>
+                                        <div className="upgrade-info">
+                                            <div className="upgrade-name">{overclocker.name}</div>
+                                            <div className="upgrade-details">{overclocker.description}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="upgrade-stats">
+                                        <div>Owned: {currentOverclocker.count}</div>
+                                        <div>Multiplier: x{Math.pow(2, currentOverclocker.count)}</div>
+                                    </div>
+                                    
+                                    {!hasTargetComputer && (
+                                        <div style={{color: '#ff6b6b', fontSize: '12px', marginBottom: '8px'}}>
+                                            ⚠️ Requires owning target computer
+                                        </div>
+                                    )}
+                                    
+                                    <button 
+                                        className="buy-button"
+                                        onClick={() => buyOverclocker(overclocker.id)}
+                                        disabled={!canAfford || !hasTargetComputer}
+                                    >
+                                        BUY - {formatNumber(currentOverclocker.currentCost)} bits
+                                    </button>
+                                    
+                                    {currentOverclocker.count > 0 && (
+                                        <button 
+                                            className="sell-button"
+                                            onClick={() => sellOverclocker(overclocker.id)}
+                                        >
+                                            SELL - +{formatNumber(Math.floor((currentOverclocker.currentCost / 2) * 0.5))} bits
                                         </button>
                                     )}
                                 </div>

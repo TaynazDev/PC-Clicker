@@ -1,12 +1,73 @@
 # PC Clicker - Change Log
 
-## Latest Updates
+## Latest Updates - February 10, 2026
+
+### Major New Features
+- **Dhahab Frenzy System** - Rare golden PC that triggers a 20-second power-up mode
+  - Flying dhahab.png appears with 5% spawn chance every 3 seconds
+  - Clicking it activates frenzy mode with 2x multiplier to all production
+  - During frenzy: motherboard transforms to dhahab pc.png
+  - All owned computers display as golden dhahab PCs
+  - Continuous rain of golden dhahabs throughout frenzy duration
+  - Visual effects: golden overlay, pulsing borders, and countdown timer
+
+- **Threadripper Golden Ticket** - Ultra-rare flying CPU that doubles your wealth
+  - 2% spawn chance every 3 seconds
+  - Flies from opposite direction (right to left) with red glow
+  - Clicking doubles your total bits instantly
+  - Shows threadripper.png in click effect
+
+- **Everything Computer** - Ultimate endgame upgrade
+  - Costs 10.0B bits (10 billion)
+  - Produces 50.0B bits per second
+  - Hidden as "???" with hmm.png until you reach 10B bits (or buy it)
+  - Stays revealed permanently once unlocked
+
+- **Computer Overclocker System** - New upgrade category to boost production
+  - 7 overclockers for each computer type (Raspberry Pi, Really Old PC, Server, Data Center, Supercomputer, Quantum, Everything)
+  - Each overclocker doubles the BPS of its target computer
+  - Stacks multiplicatively (2 overclockers = 4x, 3 = 8x, etc.)
+  - Price doubles after each purchase (exponential cost scaling)
+  - Requires owning the target computer to purchase
+  - Everything Overclocker hidden until Everything is bought
+
+### Gameplay Changes
+- **Frenzy Multiplier**: Changed from flat +1M bonuses to 2x multiplier (scales with progress)
+  - Bits per click: 2x during frenzy
+  - Bits per second: 2x during frenzy
+- **Threadripper**: Changed from flat +1B bits to doubling total bits (scales with progress)
+- **Shop Reorganization**: "UPGRADES" section renamed to "COMPUTERS"
+
+### Visual Improvements
+- Frenzy notification displays dhahab.png icons instead of star emojis
+- Raining dhahab particles with spinning fall animation
+- Golden glow effects and pulsing animations during frenzy
+- Improved click effect system - shows appropriate image based on what was clicked
+- Overclocker multiplier display (x2, x4, x8, etc.)
+
+### Bug Fixes
+- Fixed overclockers not being cleared on game restart
+- Fixed click effects showing wrong images for special events
+- Fixed display values for bits per click and bits per second during frenzy
+- Fixed upgrade sprites showing hmm.png unintentionally
+
+### Technical Improvements
+- Added overclockerUpgrades state management
+- Updated save/load system to include overclocker progress
+- Improved click effect tracking with image property
+- Enhanced spawn rate tuning for special events
+
+## Previous Updates
 
 ### New Features
 - **Sell Upgrades** - You can now sell any upgrade (Click Power, Base Upgrades, or Custom PCs) for 50% of their cost
   - Sell buttons appear below buy buttons when you own at least one upgrade
   - Selling reduces the upgrade count and refunds bits
   - Useful for optimizing your build or recovering bits from early purchases
+
+### Bug Fixes
+- Fixed sell price calculation to prevent upgrade costs from going below base price
+- Upgrade costs now properly maintain minimum base cost when selling
 
 ### Visual Improvements
 - Added animated GIF background (36013.gif) with adjustable transparency overlay
