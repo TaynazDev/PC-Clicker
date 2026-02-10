@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Clicker - Build Your Tech Empire</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: url('36013.gif') center/cover no-repeat fixed;
+            color: #00ff88;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.4) 0%, rgba(26, 26, 46, 0.4) 50%, rgba(22, 33, 62, 0.4) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .game-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Left panel - Stats */
+        .stats-panel {
+            width: 250px;
+            background: rgba(10, 14, 39, 0.9);
+            border-right: 2px solid #00ff88;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .stats-panel h1 {
+            font-size: 24px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+
+        .stat {
+            background: rgba(0, 255, 136, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #00ff88;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        .restart-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: rgba(255, 0, 85, 0.2);
+            border: 2px solid #ff0055;
+            border-radius: 8px;
+            color: #ff0055;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .restart-button:hover {
+            background: rgba(255, 0, 85, 0.3);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+            transform: scale(1.02);
+        }
+
+        .restart-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Center area - Game world */
+        .game-world {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-pc {
+            width: 300px;
+            height: 300px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-pc:hover {
+            transform: scale(1.05);
+        }
+
+        .main-pc:active {
+            transform: scale(0.95);
+        }
+
+        .pc-sprite {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: rgba(10, 14, 39, 0.9);
+            border: 4px solid #00ff88;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .pc-sprite img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .click-effect {
+            position: absolute;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            pointer-events: none;
+            animation: float-up 1s ease-out;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .click-effect-image {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.8));
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+        /* Bottom area - Owned upgrades display */
+        .owned-upgrades-display {
+            position: absolute;
+            bottom: 0;
+            left: 250px;
+            right: 300px;
+            height: 150px;
+            background: rgba(10, 14, 39, 0.8);
+            border-top: 2px solid #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .upgrade-sprite {
+            min-width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #1a1a2e, #2a2a4e);
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        .upgrade-sprite-icon {
+            font-size: 32px;
+        }
+
+        .upgrade-sprite-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .upgrade-sprite-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #00ff88;
+            color: #0a0e27;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid #0a0e27;
+        }
+
+        /* Right panel - Shop */
+        .shop-panel {
+            width: 300px;
+            background: rgba(10, 14, 39, 0.9);
+            border-left: 2px solid #00ff88;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .shop-panel h2 {
+            font-size: 20px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .upgrade-item {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .upgrade-item:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .upgrade-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .upgrade-icon {
+            font-size: 32px;
+        }
+
+        .upgrade-icon-img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .custom-pc-item {
+            position: relative;
+        }
+
+        .custom-pc-tooltip {
+            position: absolute;
+            left: 0;
+            top: 100%;
+            margin-top: 5px;
+            background: #0a0e27;
+            border: 3px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            width: 100%;
+            z-index: 10000;
+            display: none;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+        }
+
+        .custom-pc-item:hover .custom-pc-tooltip {
+            display: block;
+        }
+
+        .tooltip-header {
+            font-size: 14px;
+            color: #00ffff;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #00ff88;
+            padding-bottom: 8px;
+        }
+
+        .tooltip-part {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 12px;
+        }
+
+        .tooltip-part-name {
+            color: #00ff88;
+        }
+
+        .tooltip-part-bps {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .upgrade-info {
+            flex: 1;
+        }
+
+        .upgrade-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .upgrade-details {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .upgrade-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .buy-button, .customize-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(145deg, #00ff88, #00cc66);
+            border: none;
+            border-radius: 5px;
+            color: #0a0e27;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .buy-button:hover:not(:disabled), .customize-button:hover {
+            background: linear-gradient(145deg, #00ffaa, #00ee77);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .buy-button:active:not(:disabled), .customize-button:active {
+            transform: translateY(0);
+        }
+
+        .buy-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .customize-button {
+            background: linear-gradient(145deg, #ff00ff, #cc00cc);
+        }
+
+        .customize-button:hover {
+            background: linear-gradient(145deg, #ff33ff, #dd00dd);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #0a0e27, #1a1a2e);
+            border: 3px solid #00ff88;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #00ff88;
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        .close-button {
+            background: #ff0055;
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .close-button:hover {
+            background: #ff3377;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+        }
+
+        .pc-builder {
+            display: flex;
+            gap: 30px;
+        }
+
+        .parts-selection {
+            flex: 1;
+        }
+
+        .part-category {
+            margin-bottom: 20px;
+        }
+
+        .part-category-title {
+            font-size: 14px;
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .part-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .part-option {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .part-option:hover {
+            background: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+        }
+
+        .part-option.selected {
+            background: rgba(0, 255, 255, 0.3);
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .part-name {
+            font-size: 13px;
+        }
+
+        .part-cost {
+            font-size: 13px;
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .part-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .part-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .build-summary {
+            width: 250px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 0;
+        }
+
+        .build-preview {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(145deg, #1e3a5f, #2a5298);
+            border: 3px solid #00ff88;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        .build-stats {
+            margin-bottom: 15px;
+        }
+
+        .build-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .build-stat-label {
+            opacity: 0.8;
+        }
+
+        .build-stat-value {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .build-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(145deg, #00ff88, #00cc66);
+            border: none;
+            border-radius: 5px;
+            color: #0a0e27;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+        }
+
+        .build-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #00ffaa, #00ee77);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .build-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00ffaa;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Utility function to format numbers
+        const formatNumber = (num) => {
+            if (num < 1000) return Math.floor(num).toString();
+            if (num < 1000000) return (num / 1000).toFixed(1) + 'K';
+            if (num < 1000000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num < 1000000000000) return (num / 1000000000).toFixed(2) + 'B';
+            return (num / 1000000000000).toFixed(2) + 'T';
+        };
+
+        // PC Parts data
+        const PC_PARTS = {
+            cpu: [
+                { name: 'AMD Athlon', cost: 50, bps: 50 },
+                { name: 'AMD Ryzen 3', cost: 150, bps: 120 },
+                { name: 'AMD Ryzen 5', cost: 300, bps: 280 },
+                { name: 'AMD Ryzen 7', cost: 500, bps: 550 },
+                { name: 'AMD Ryzen 9', cost: 800, bps: 1200 },
+                { name: 'AMD Threadripper', cost: 1500, bps: 2400 }
+            ],
+            gpu: [
+                { name: 'Integrated Graphics', cost: 0, bps: 0 },
+                { name: 'GTX 1650', cost: 200, bps: 160 },
+                { name: 'RTX 3060', cost: 400, bps: 400 },
+                { name: 'RTX 4070', cost: 700, bps: 800 },
+                { name: 'RTX 4090', cost: 1600, bps: 2000 },
+                { name: 'RTX 5090', cost: 2500, bps: 4000 }
+            ],
+            ram: [
+                { name: '4GB DDR4', cost: 30, bps: 25 },
+                { name: '8GB DDR4', cost: 60, bps: 65 },
+                { name: '16GB DDR4', cost: 120, bps: 145 },
+                { name: '32GB DDR5', cost: 250, bps: 320 },
+                { name: '64GB DDR5', cost: 500, bps: 720 },
+                { name: '128GB DDR5', cost: 1000, bps: 1600 }
+            ],
+            storage: [
+                { name: '500GB HDD', cost: 40, bps: 35 },
+                { name: '1TB HDD', cost: 60, bps: 55 },
+                { name: '500GB SATA SSD', cost: 100, bps: 120 },
+                { name: '1TB NVMe SSD', cost: 200, bps: 240 },
+                { name: '2TB NVMe SSD', cost: 400, bps: 520 },
+                { name: '4TB NVMe SSD', cost: 800, bps: 1120 }
+            ],
+            motherboard: [
+                { name: 'Basic H610', cost: 80, bps: 40 },
+                { name: 'B660', cost: 150, bps: 120 },
+                { name: 'B760', cost: 250, bps: 225 },
+                { name: 'Z690', cost: 400, bps: 440 },
+                { name: 'Z790', cost: 600, bps: 880 },
+                { name: 'X670E Enthusiast', cost: 900, bps: 1440 }
+            ],
+            psu: [
+                { name: '450W Bronze', cost: 50, bps: 25 },
+                { name: '650W Bronze', cost: 80, bps: 55 },
+                { name: '750W Gold', cost: 130, bps: 110 },
+                { name: '850W Gold', cost: 180, bps: 185 },
+                { name: '1000W Platinum', cost: 280, bps: 305 },
+                { name: '1200W Titanium', cost: 450, bps: 560 }
+            ],
+            case: [
+                { name: 'Basic Tower', cost: 40, bps: 15, image: 'basic tower.png' },
+                { name: 'Mid Tower', cost: 80, bps: 40, image: 'mid tower.png' },
+                { name: 'RGB Mid Tower', cost: 200, bps: 280, image: 'mid tower with rgb.png' },
+                { name: 'Full Tower', cost: 300, bps: 145, image: 'full tower.png' },
+                { name: 'Premium RGB Full Tower', cost: 500, bps: 560, image: 'premium rgb full tower.png' }
+            ],
+            cooling: [
+                { name: 'Stock Cooler', cost: 0, bps: 0 },
+                { name: 'Tower Air Cooler', cost: 40, bps: 40 },
+                { name: 'Large Tower Cooler', cost: 80, bps: 80 },
+                { name: '240mm AIO', cost: 130, bps: 145 },
+                { name: '360mm AIO', cost: 200, bps: 280 },
+                { name: 'Custom Loop', cost: 400, bps: 560 }
+            ]
+        };
+
+        // Base upgrades configuration
+        const BASE_UPGRADES = [
+            { 
+                id: 'oldpc', 
+                name: 'Really Old PC', 
+                baseCost: 10, 
+                baseBps: 10, 
+                icon: '🖥️',
+                image: 'really old pc.png',
+                description: 'A dusty relic from the 90s'
+            },
+            { 
+                id: 'raspberrypi', 
+                name: 'Raspberry Pi', 
+                baseCost: 50, 
+                baseBps: 25, 
+                icon: '🍓',
+                image: 'raspberry pi.png',
+                description: 'Tiny but mighty computing'
+            },
+            { 
+                id: 'custompc', 
+                name: 'Custom PC', 
+                baseCost: 0, 
+                baseBps: 0, 
+                icon: '🔧',
+                description: 'Build your own machine',
+                isCustom: true
+            },
+            { 
+                id: 'server', 
+                name: 'Server', 
+                baseCost: 5000, 
+                baseBps: 250, 
+                icon: '🖲️',
+                image: 'server.png',
+                description: 'Heavy-duty processing power'
+            },
+            { 
+                id: 'datacenter', 
+                name: 'Data Center', 
+                baseCost: 30000, 
+                baseBps: 1500, 
+                icon: '🏢',
+                image: 'data centre.png',
+                description: 'Industrial scale infrastructure'
+            },
+            { 
+                id: 'supercomputer', 
+                name: 'Supercomputer', 
+                baseCost: 150000, 
+                baseBps: 8000, 
+                icon: '🔷',
+                image: 'supercomputer.png',
+                description: 'Cutting-edge computation'
+            },
+            { 
+                id: 'quantum', 
+                name: 'Quantum Computer', 
+                baseCost: 1500000, 
+                baseBps: 100000, 
+                icon: '⚛️',
+                image: 'qantum computer.png',
+                description: 'Beyond conventional computing'
+            }
+        ];
+
+        // Click Power Upgrades
+        const CLICK_UPGRADES = [
+            {
+                id: 'cursor',
+                name: 'Better Mouse',
+                baseCost: 50,
+                clickPower: 1,
+                icon: '🖱️',
+                description: '+1 bit per click'
+            },
+            {
+                id: 'autoclicker',
+                name: 'Auto-Clicker Software',
+                baseCost: 250,
+                clickPower: 5,
+                icon: '🔄',
+                description: '+5 bits per click'
+            },
+            {
+                id: 'mechanical',
+                name: 'Mechanical Keyboard',
+                baseCost: 1000,
+                clickPower: 25,
+                icon: '⌨️',
+                description: '+25 bits per click'
+            },
+            {
+                id: 'gaming_setup',
+                name: 'Gaming Setup',
+                baseCost: 5000,
+                clickPower: 100,
+                icon: '🎮',
+                description: '+100 bits per click'
+            },
+            {
+                id: 'ai_assistant',
+                name: 'AI Clicking Assistant',
+                baseCost: 25000,
+                clickPower: 500,
+                icon: '🤖',
+                description: '+500 bits per click'
+            },
+            {
+                id: 'neural_interface',
+                name: 'Neural Interface',
+                baseCost: 100000,
+                clickPower: 2500,
+                icon: '🧠',
+                description: '+2500 bits per click'
+            }
+        ];
+
+        function App() {
+            const [bits, setBits] = useState(0);
+            const [totalBps, setTotalBps] = useState(0);
+            const [clickPower, setClickPower] = useState(1);
+            const [upgrades, setUpgrades] = useState({});
+            const [clickUpgrades, setClickUpgrades] = useState({});
+            const [customPCs, setCustomPCs] = useState([]);
+            const [partPurchaseCounts, setPartPurchaseCounts] = useState({});
+            const [showBuilder, setShowBuilder] = useState(false);
+            const [clickEffects, setClickEffects] = useState([]);
+            const gameWorldRef = useRef(null);
+
+            // Initialize game state from localStorage
+            useEffect(() => {
+                const savedState = localStorage.getItem('pcClickerSave');
+                if (savedState) {
+                    const { bits: savedBits, upgrades: savedUpgrades, clickUpgrades: savedClickUpgrades, customPCs: savedCustomPCs, partPurchaseCounts: savedCounts, clickPower: savedClickPower } = JSON.parse(savedState);
+                    setBits(savedBits || 0);
+                    setUpgrades(savedUpgrades || {});
+                    setClickUpgrades(savedClickUpgrades || {});
+                    setCustomPCs(savedCustomPCs || []);
+                    setPartPurchaseCounts(savedCounts || {});
+                    setClickPower(savedClickPower || 1);
+                }
+            }, []);
+
+            // Calculate click power
+            useEffect(() => {
+                let power = 1;
+                CLICK_UPGRADES.forEach(upgrade => {
+                    if (clickUpgrades[upgrade.id]) {
+                        power += upgrade.clickPower * clickUpgrades[upgrade.id].count;
+                    }
+                });
+                setClickPower(power);
+            }, [clickUpgrades]);
+
+            // Calculate total bits per second
+            useEffect(() => {
+                let total = 0;
+                
+                // Regular upgrades
+                BASE_UPGRADES.forEach(upgrade => {
+                    if (!upgrade.isCustom && upgrades[upgrade.id]) {
+                        total += upgrade.baseBps * upgrades[upgrade.id].count;
+                    }
+                });
+
+                // Custom PCs
+                customPCs.forEach(pc => {
+                    total += pc.bps;
+                });
+
+                setTotalBps(total);
+            }, [upgrades, customPCs]);
+
+            // Passive income (update 10 times per second)
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    if (totalBps > 0) {
+                        setBits(prev => prev + totalBps / 10);
+                    }
+                }, 100);
+                return () => clearInterval(interval);
+            }, [totalBps]);
+
+            // Save game state
+            useEffect(() => {
+                const saveState = {
+                    bits,
+                    upgrades,
+                    clickUpgrades,
+                    customPCs,
+                    partPurchaseCounts,
+                    clickPower
+                };
+                localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
+            }, [bits, upgrades, clickUpgrades, customPCs, partPurchaseCounts, clickPower]);
+
+            const handlePCClick = (e) => {
+                setBits(prev => prev + clickPower);
+                
+                // Create click effect
+                if (gameWorldRef.current) {
+                    const rect = gameWorldRef.current.getBoundingClientRect();
+                    const effect = {
+                        id: Date.now() + Math.random(),
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top,
+                        value: clickPower
+                    };
+                    setClickEffects(prev => [...prev, effect]);
+                    
+                    // Remove effect after animation
+                    setTimeout(() => {
+                        setClickEffects(prev => prev.filter(eff => eff.id !== effect.id));
+                    }, 1000);
+                }
+            };
+
+            const buyUpgrade = (upgradeId) => {
+                const upgrade = BASE_UPGRADES.find(u => u.id === upgradeId);
+                if (!upgrade || upgrade.isCustom) return;
+
+                const currentUpgrade = upgrades[upgradeId] || { count: 0, currentCost: upgrade.baseCost };
+                
+                if (bits >= currentUpgrade.currentCost) {
+                    setBits(prev => prev - currentUpgrade.currentCost);
+                    setUpgrades(prev => ({
+                        ...prev,
+                        [upgradeId]: {
+                            count: currentUpgrade.count + 1,
+                            currentCost: Math.floor(currentUpgrade.currentCost * 1.15)
+                        }
+                    }));
+                }
+            };
+
+            const buyClickUpgrade = (upgradeId) => {
+                const upgrade = CLICK_UPGRADES.find(u => u.id === upgradeId);
+                if (!upgrade) return;
+
+                const currentUpgrade = clickUpgrades[upgradeId] || { count: 0, currentCost: upgrade.baseCost };
+                
+                if (bits >= currentUpgrade.currentCost) {
+                    setBits(prev => prev - currentUpgrade.currentCost);
+                    setClickUpgrades(prev => ({
+                        ...prev,
+                        [upgradeId]: {
+                            count: currentUpgrade.count + 1,
+                            currentCost: Math.floor(currentUpgrade.currentCost * 1.15)
+                        }
+                    }));
+                }
+            };
+
+            const openPCBuilder = () => {
+                setShowBuilder(true);
+            };
+
+            const closePCBuilder = () => {
+                setShowBuilder(false);
+            };
+
+            const buildCustomPC = (selectedParts, totalCost, totalBps) => {
+                if (bits >= totalCost) {
+                    setBits(prev => prev - totalCost);
+                    setCustomPCs(prev => [...prev, { parts: selectedParts, cost: totalCost, bps: totalBps }]);
+                    
+                    // Update part purchase counts
+                    setPartPurchaseCounts(prev => {
+                        const newCounts = { ...prev };
+                        Object.keys(selectedParts).forEach(category => {
+                            const partIndex = selectedParts[category];
+                            if (partIndex !== null) {
+                                const key = `${category}-${partIndex}`;
+                                newCounts[key] = (newCounts[key] || 0) + 1;
+                            }
+                        });
+                        return newCounts;
+                    });
+                    
+                    // Update custom PC count in upgrades
+                    setUpgrades(prev => ({
+                        ...prev,
+                        custompc: {
+                            count: (prev.custompc?.count || 0) + 1,
+                            currentCost: 0
+                        }
+                    }));
+                    
+                    closePCBuilder();
+                }
+            };
+
+            const restartGame = () => {
+                if (confirm('Are you sure you want to restart? All progress will be lost!')) {
+                    localStorage.removeItem('pcClickerSave');
+                    setBits(0);
+                    setTotalBps(0);
+                    setClickPower(1);
+                    setUpgrades({});
+                    setClickUpgrades({});
+                    setCustomPCs([]);
+                    setPartPurchaseCounts({});
+                    setClickEffects([]);
+                }
+            };
+
+            return (
+                <div className="game-container">
+                    <div className="stats-panel">
+                        <h1>PC CLICKER</h1>
+                        <div className="stat">
+                            <div className="stat-label">BITS</div>
+                            <div className="stat-value">{formatNumber(bits)}</div>
+                        </div>
+                        <div className="stat">
+                            <div className="stat-label">BITS PER CLICK</div>
+                            <div className="stat-value">{formatNumber(clickPower)}</div>
+                        </div>
+                        <div className="stat">
+                            <div className="stat-label">BITS PER SECOND</div>
+                            <div className="stat-value">{formatNumber(totalBps)}</div>
+                        </div>
+                        <button className="restart-button" onClick={restartGame}>
+                            🔄 RESTART GAME
+                        </button>
+                    </div>
+
+                    <div className="game-world" ref={gameWorldRef}>
+                        <div className="main-pc" onClick={handlePCClick}>
+                            <div className="pc-sprite">
+                                <img src="motherboard.webp" alt="Motherboard" />
+                            </div>
+                        </div>
+
+                        {clickEffects.map(effect => (
+                            <div 
+                                key={effect.id}
+                                className="click-effect"
+                                style={{ left: effect.x, top: effect.y }}
+                            >
+                                <img src="motherboard.webp" alt="" className="click-effect-image" />
+                                <span>+{effect.value}</span>
+                            </div>
+                        ))}
+
+                        <div className="owned-upgrades-display">
+                            {BASE_UPGRADES.map(upgrade => {
+                                if (upgrade.isCustom) return null;
+                                const count = upgrades[upgrade.id]?.count || 0;
+                                
+                                if (count === 0) return null;
+                                
+                                return (
+                                    <div key={upgrade.id} className="upgrade-sprite">
+                                        {upgrade.image ? (
+                                            <img src={upgrade.image} alt={upgrade.name} className="upgrade-sprite-image" />
+                                        ) : (
+                                            <div className="upgrade-sprite-icon">{upgrade.icon}</div>
+                                        )}
+                                        <div className="upgrade-sprite-count">{count}</div>
+                                    </div>
+                                );
+                            })}
+                            {customPCs.map((pc, index) => {
+                                const caseIndex = pc.parts.case;
+                                const caseImage = caseIndex !== null ? PC_PARTS.case[caseIndex].image : null;
+                                return (
+                                    <div key={`custom-${index}`} className="upgrade-sprite">
+                                        {caseImage ? (
+                                            <img src={caseImage} alt="Custom PC" className="upgrade-sprite-image" />
+                                        ) : (
+                                            <div className="upgrade-sprite-icon">🔧</div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className="shop-panel">
+                        <h2>CLICK POWER</h2>
+                        {CLICK_UPGRADES.map(upgrade => {
+                            const currentUpgrade = clickUpgrades[upgrade.id] || { 
+                                count: 0, 
+                                currentCost: upgrade.baseCost 
+                            };
+                            const canAfford = bits >= currentUpgrade.currentCost;
+
+                            return (
+                                <div key={upgrade.id} className="upgrade-item">
+                                    <div className="upgrade-header">
+                                        <div className="upgrade-icon">{upgrade.icon}</div>
+                                        <div className="upgrade-info">
+                                            <div className="upgrade-name">{upgrade.name}</div>
+                                            <div className="upgrade-details">{upgrade.description}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="upgrade-stats">
+                                        <div>Owned: {currentUpgrade.count}</div>
+                                        <div>Power: +{formatNumber(upgrade.clickPower)}/click</div>
+                                    </div>
+                                    
+                                    <button 
+                                        className="buy-button"
+                                        onClick={() => buyClickUpgrade(upgrade.id)}
+                                        disabled={!canAfford}
+                                    >
+                                        BUY - {formatNumber(currentUpgrade.currentCost)} bits
+                                    </button>
+                                </div>
+                            );
+                        })}
+
+                        <h2 style={{marginTop: '20px'}}>UPGRADES</h2>
+                        {BASE_UPGRADES.map(upgrade => {
+                            if (upgrade.isCustom) {
+                                return (
+                                    <div key={upgrade.id} className="upgrade-item">
+                                        <div className="upgrade-header">
+                                            <div className="upgrade-icon">{upgrade.icon}</div>
+                                            <div className="upgrade-info">
+                                                <div className="upgrade-name">{upgrade.name}</div>
+                                                <div className="upgrade-details">{upgrade.description}</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="upgrade-stats">
+                                                <div>Owned: {customPCs.length}</div>
+                                            </div>
+                                            <button 
+                                                className="customize-button"
+                                                onClick={openPCBuilder}
+                                            >
+                                                🔧 CUSTOMIZE
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            
+                            const currentUpgrade = upgrades[upgrade.id] || { 
+                                count: 0, 
+                                currentCost: upgrade.baseCost 
+                            };
+                            const canAfford = bits >= currentUpgrade.currentCost;
+
+                            return (
+                                <div key={upgrade.id} className="upgrade-item">
+                                    <div className="upgrade-header">
+                                        {upgrade.image ? (
+                                            <img src={upgrade.image} alt={upgrade.name} className="upgrade-icon-img" />
+                                        ) : (
+                                            <div className="upgrade-icon">{upgrade.icon}</div>
+                                        )}
+                                        <div className="upgrade-info">
+                                            <div className="upgrade-name">{upgrade.name}</div>
+                                            <div className="upgrade-details">{upgrade.description}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="upgrade-stats">
+                                        <div>Owned: {currentUpgrade.count}</div>
+                                        <div>Income: +{formatNumber(upgrade.baseBps)}/s</div>
+                                    </div>
+                                    
+                                    <button 
+                                        className="buy-button"
+                                        onClick={() => buyUpgrade(upgrade.id)}
+                                        disabled={!canAfford}
+                                    >
+                                        BUY - {formatNumber(currentUpgrade.currentCost)} bits
+                                    </button>
+                                </div>
+                            );
+                        })}
+                        
+                        {customPCs.length > 0 && <h2 style={{marginTop: '20px'}}>CUSTOM PCs</h2>}
+                        {customPCs.map((pc, index) => {
+                            const caseIndex = pc.parts.case;
+                            const caseName = caseIndex !== null ? PC_PARTS.case[caseIndex].name : 'Unknown Case';
+                            const caseImage = caseIndex !== null ? PC_PARTS.case[caseIndex].image : null;
+                            
+                            return (
+                                <div key={`custom-pc-${index}`} className="upgrade-item custom-pc-item">
+                                    <div className="upgrade-header">
+                                        {caseImage ? (
+                                            <img src={caseImage} alt={caseName} className="upgrade-icon-img" />
+                                        ) : (
+                                            <div className="upgrade-icon">🔧</div>
+                                        )}
+                                        <div className="upgrade-info">
+                                            <div className="upgrade-name">Custom PC #{index + 1}</div>
+                                            <div className="upgrade-details">{caseName}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="upgrade-stats">
+                                        <div>Income: +{formatNumber(pc.bps)}/s</div>
+                                        <div>Cost: {formatNumber(pc.cost)} bits</div>
+                                    </div>
+
+                                    <div className="custom-pc-tooltip">
+                                        <div className="tooltip-header">PC Components</div>
+                                        {pc.parts && Object.keys(pc.parts).map(category => {
+                                            const partIndex = pc.parts[category];
+                                            if (partIndex === null || partIndex === undefined) return null;
+                                            const part = PC_PARTS[category]?.[partIndex];
+                                            if (!part) return null;
+                                            return (
+                                                <div key={category} className="tooltip-part">
+                                                    <span className="tooltip-part-name">{category.toUpperCase()}: {part.name}</span>
+                                                    <span className="tooltip-part-bps">+{formatNumber(part.bps)}/s</span>
+                                                </div>
+                                            );
+                                        })}
+                                        <div className="tooltip-part" style={{marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #00ff88'}}>
+                                            <span className="tooltip-part-name">TOTAL BPS:</span>
+                                            <span className="tooltip-part-bps">+{formatNumber(pc.bps)}/s</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {showBuilder && (
+                        <PCBuilderModal 
+                            bits={bits}
+                            partPurchaseCounts={partPurchaseCounts}
+                            onClose={closePCBuilder}
+                            onBuild={buildCustomPC}
+                        />
+                    )}
+                </div>
+            );
+        }
+
+        function PCBuilderModal({ bits, partPurchaseCounts, onClose, onBuild }) {
+            const [selectedParts, setSelectedParts] = useState({
+                cpu: null,
+                gpu: null,
+                ram: null,
+                storage: null,
+                motherboard: null,
+                psu: null,
+                case: null,
+                cooling: null
+            });
+
+            const selectPart = (category, index) => {
+                setSelectedParts(prev => ({
+                    ...prev,
+                    [category]: index
+                }));
+            };
+
+            const getPartCost = (category, index) => {
+                const baseCost = PC_PARTS[category][index].cost;
+                const key = `${category}-${index}`;
+                const purchaseCount = partPurchaseCounts[key] || 0;
+                return Math.floor(baseCost * Math.pow(1.15, purchaseCount));
+            };
+
+            const calculateTotalCost = () => {
+                let total = 0;
+                Object.keys(selectedParts).forEach(category => {
+                    const index = selectedParts[category];
+                    if (index !== null) {
+                        total += getPartCost(category, index);
+                    }
+                });
+                return total;
+            };
+
+            const calculateTotalBps = () => {
+                let total = 0;
+                Object.keys(selectedParts).forEach(category => {
+                    const index = selectedParts[category];
+                    if (index !== null) {
+                        total += PC_PARTS[category][index].bps;
+                    }
+                });
+                return total;
+            };
+
+            const allPartsSelected = () => {
+                return Object.values(selectedParts).every(val => val !== null);
+            };
+
+            const totalCost = calculateTotalCost();
+            const totalBps = calculateTotalBps();
+            const canBuild = allPartsSelected() && bits >= totalCost;
+
+            const handleBuild = () => {
+                if (canBuild) {
+                    onBuild(selectedParts, totalCost, totalBps);
+                }
+            };
+
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <div className="modal-title">🔧 CUSTOM PC BUILDER</div>
+                            <button className="close-button" onClick={onClose}>×</button>
+                        </div>
+
+                        <div className="pc-builder">
+                            <div className="parts-selection">
+                                {Object.keys(PC_PARTS).map(category => (
+                                    <div key={category} className="part-category">
+                                        <div className="part-category-title">
+                                            {category.toUpperCase()}
+                                        </div>
+                                        <div className="part-options">
+                                            {PC_PARTS[category].map((part, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`part-option ${selectedParts[category] === index ? 'selected' : ''}`}
+                                                    onClick={() => selectPart(category, index)}
+                                                >
+                                                    <div className="part-info">
+                                                        {part.image && <img src={part.image} alt={part.name} className="part-image" />}
+                                                        <span className="part-name">{part.name}</span>
+                                                    </div>
+                                                    <span className="part-cost">
+                                                        {part.cost === 0 ? 'FREE' : `${formatNumber(getPartCost(category, index))} bits`}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="build-summary">
+                                <div className="build-preview">🔧</div>
+                                
+                                <div className="build-stats">
+                                    <div className="build-stat">
+                                        <span className="build-stat-label">Total Cost:</span>
+                                        <span className="build-stat-value">{formatNumber(totalCost)}</span>
+                                    </div>
+                                    <div className="build-stat">
+                                        <span className="build-stat-label">Bits/Second:</span>
+                                        <span className="build-stat-value">{formatNumber(totalBps)}</span>
+                                    </div>
+                                    <div className="build-stat">
+                                        <span className="build-stat-label">Your Bits:</span>
+                                        <span className="build-stat-value">{formatNumber(bits)}</span>
+                                    </div>
+                                    <div className="build-stat">
+                                        <span className="build-stat-label">Parts Selected:</span>
+                                        <span className="build-stat-value">
+                                            {Object.values(selectedParts).filter(v => v !== null).length}/8
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <button 
+                                    className="build-button"
+                                    onClick={handleBuild}
+                                    disabled={!canBuild}
+                                >
+                                    {!allPartsSelected() ? 'SELECT ALL PARTS' : 
+                                     bits < totalCost ? 'NOT ENOUGH BITS' : 
+                                     '🔨 BUILD PC'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
