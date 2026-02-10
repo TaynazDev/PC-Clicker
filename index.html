@@ -972,11 +972,11 @@
                 { name: '1200W Titanium', cost: 450, bps: 560 }
             ],
             case: [
-                { name: 'Basic Tower', cost: 40, bps: 15, image: './basic tower.png' },
-                { name: 'Mid Tower', cost: 80, bps: 40, image: './mid tower.png' },
-                { name: 'RGB Mid Tower', cost: 200, bps: 280, image: './mid tower with rgb.png' },
-                { name: 'Full Tower', cost: 300, bps: 145, image: './full tower.png' },
-                { name: 'Premium RGB Full Tower', cost: 500, bps: 560, image: './premium rgb full tower.png' }
+                { name: 'Basic Tower', cost: 40, bps: 15, image: './basic%20tower.png' },
+                { name: 'Mid Tower', cost: 80, bps: 40, image: './mid%20tower.png' },
+                { name: 'RGB Mid Tower', cost: 200, bps: 280, image: './mid%20tower%20with%20rgb.png' },
+                { name: 'Full Tower', cost: 300, bps: 145, image: './full%20tower.png' },
+                { name: 'Premium RGB Full Tower', cost: 500, bps: 560, image: './premium%20rgb%20full%20tower.png' }
             ],
             cooling: [
                 { name: 'Stock Cooler', cost: 0, bps: 0 },
@@ -996,7 +996,7 @@
                 baseCost: 10, 
                 baseBps: 10, 
                 icon: '🖥️',
-                image: './really old pc.png',
+                image: './really%20old%20pc.png',
                 description: 'A dusty relic from the 90s'
             },
             { 
@@ -1005,7 +1005,7 @@
                 baseCost: 50, 
                 baseBps: 25, 
                 icon: '🍓',
-                image: './raspberry pi.png',
+                image: './raspberry%20pi.png',
                 description: 'Tiny but mighty computing'
             },
             { 
@@ -1032,7 +1032,7 @@
                 baseCost: 30000, 
                 baseBps: 1500, 
                 icon: '🏢',
-                image: './data centre.png',
+                image: './data%20centre.png',
                 description: 'Industrial scale infrastructure'
             },
             { 
@@ -1050,7 +1050,7 @@
                 baseCost: 1500000, 
                 baseBps: 100000, 
                 icon: '⚛️',
-                image: './qantum computer.png',
+                image: './qantum%20computer.png',
                 description: 'Beyond conventional computing'
             },
             { 
@@ -1381,7 +1381,7 @@
                         x: e.clientX - rect.left,
                         y: e.clientY - rect.top,
                         value: clickValue,
-                        image: frenzyActive ? "./dhahab pc.png" : "./motherboard.webp"
+                        image: frenzyActive ? "./dhahab%20pc.png" : "./motherboard.webp"
                     };
                     setClickEffects(prev => [...prev, effect]);
                     
@@ -1685,7 +1685,7 @@
                         
                         <div className={`main-pc ${frenzyActive ? 'frenzy-mode' : ''}`} onClick={handlePCClick}>
                             <div className="pc-sprite">
-                                <img src={frenzyActive ? "./dhahab pc.png" : "./motherboard.webp"} alt="Motherboard" />
+                                <img src={frenzyActive ? "./dhahab%20pc.png" : "./motherboard.webp"} alt="Motherboard" />
                             </div>
                         </div>
 
@@ -1713,7 +1713,7 @@
                                 return (
                                     <div key={upgrade.id} className="upgrade-sprite">
                                         {frenzyActive ? (
-                                            <img src="./dhahab pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
+                                            <img src="./dhahab%20pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
                                         ) : displayImage ? (
                                             <img src={displayImage} alt={upgrade.name} className="upgrade-sprite-image" />
                                         ) : (
@@ -1729,7 +1729,7 @@
                                 return (
                                     <div key={`custom-${index}`} className="upgrade-sprite">
                                         {frenzyActive ? (
-                                            <img src="./dhahab pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
+                                            <img src="./dhahab%20pc.png" alt="Dhahab PC" className="upgrade-sprite-image" />
                                         ) : caseImage ? (
                                             <img src={caseImage} alt="Custom PC" className="upgrade-sprite-image" />
                                         ) : (

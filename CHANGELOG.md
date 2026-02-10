@@ -2,6 +2,16 @@
 
 ## Latest Updates - February 10, 2026
 
+### Bug Fixes
+- **Fixed image loading issues when opening HTML directly (without live server)**
+  - Added explicit relative paths (./) to all image references
+  - URL-encoded spaces in image filenames (%20) for browser compatibility
+  - Now works correctly when opening index.html directly in any browser
+
+---
+
+## Previous Updates - February 10, 2026
+
 ### Major New Features
 - **Dhahab Frenzy System** - Rare golden PC that triggers a 20-second power-up mode
   - Flying dhahab.png appears with 5% spawn chance every 3 seconds
