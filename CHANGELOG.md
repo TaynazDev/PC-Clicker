@@ -1,6 +1,16 @@
 # PC Clicker - Change Log
 
-## Latest Updates - February 10, 2026
+## Latest Updates - February 12, 2026
+
+### New Features
+- **Custom PC Overclocker** - Added overclocker upgrade for Custom PC builds
+  - Costs 5,000 bits (balanced between Raspberry Pi and Server overclockers)
+  - Doubles Custom PC production with each purchase
+  - Stacks multiplicatively like other overclockers
+
+---
+
+## Previous Updates - February 10, 2026
 
 ### Bug Fixes
 - **Fixed image loading issues when opening HTML directly (without live server)**
