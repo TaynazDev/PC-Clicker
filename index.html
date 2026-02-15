@@ -22,6 +22,10 @@
             position: relative;
         }
 
+        body.supply-chain-bg {
+            background: url('./assets/images/error.gif') center/cover no-repeat fixed;
+        }
+
         body::before {
             content: '';
             position: fixed;
@@ -32,6 +36,10 @@
             background: linear-gradient(135deg, rgba(10, 14, 39, 0.4) 0%, rgba(26, 26, 46, 0.4) 50%, rgba(22, 33, 62, 0.4) 100%);
             pointer-events: none;
             z-index: 0;
+        }
+
+        body.supply-chain-bg::before {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.5) 0%, rgba(100, 0, 0, 0.5) 50%, rgba(80, 0, 0, 0.5) 100%);
         }
 
         .game-container {
@@ -542,8 +550,15 @@
             background: linear-gradient(145deg, #ff00ff, #cc00cc);
         }
 
-        .customize-button:hover {
+        .customize-button:hover:not(:disabled) {
             background: linear-gradient(145deg, #ff33ff, #dd00dd);
+        }
+
+        .customize-button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
         }
 
         /* Modal */
@@ -926,6 +941,322 @@
             }
         }
 
+        /* Supply Chain Issues Styles */
+        .supply-chain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, rgba(139, 0, 0, 0.2) 70%);
+            pointer-events: none;
+            z-index: 5;
+            animation: supply-chain-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes supply-chain-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.7; }
+        }
+
+        .supply-chain-notification {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(220, 20, 60, 0.95);
+            color: #fff;
+            padding: 30px 60px;
+            border-radius: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 40px rgba(220, 20, 60, 0.8);
+            pointer-events: none;
+            z-index: 200;
+            animation: supply-chain-warning 0.5s ease-out;
+        }
+
+        @keyframes supply-chain-warning {
+            0% { transform: translateX(-50%) scale(0.5); opacity: 0; }
+            50% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1); opacity: 1; }
+        }
+
+        .supply-chain-timer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: bold;
+            color: #dc143c;
+            text-shadow: 0 0 30px rgba(220, 20, 60, 1),
+                         0 0 60px rgba(220, 20, 60, 0.8);
+            pointer-events: none;
+            z-index: 300;
+        }
+
+        /* Red Theme for Supply Chain Issues */
+        .game-container.red-theme .stats-panel {
+            background: rgba(39, 10, 14, 0.9);
+            border-right: 2px solid #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .game-container.red-theme .stats-panel h1 {
+            color: #ff4444;
+            text-shadow: 0 0 10px #ff4444;
+            border-bottom: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .stat {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+        }
+
+        .game-container.red-theme .stat-value {
+            color: #ff6666;
+            text-shadow: 0 0 5px #ff6666;
+        }
+
+        .game-container.red-theme body {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .shop-panel {
+            background: rgba(39, 10, 14, 0.9);
+            border-left: 2px solid #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+        }
+
+        .game-container.red-theme .shop-panel h2 {
+            color: #ff4444;
+            text-shadow: 0 0 10px #ff4444;
+            border-bottom: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .upgrade-item {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+        }
+
+        .game-container.red-theme .upgrade-item:hover {
+            background: rgba(255, 68, 68, 0.2);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+        }
+
+        .game-container.red-theme .upgrade-name {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .upgrade-description {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .upgrade-price {
+            color: #ff4444;
+        }
+
+        .game-container.red-theme .buy-button:not(:disabled) {
+            background: linear-gradient(145deg, #ff4444, #cc3333);
+        }
+
+        .game-container.red-theme .buy-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #ff6666, #dd4444);
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+        }
+
+        .game-container.red-theme ::-webkit-scrollbar-thumb {
+            background: #ff4444;
+        }
+
+        .game-container.red-theme ::-webkit-scrollbar-thumb:hover {
+            background: #ff6666;
+        }
+
+        .game-container.red-theme .pc-sprite {
+            background: rgba(39, 10, 14, 0.9);
+            border: 4px solid #ff4444;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
+        }
+
+        .game-container.red-theme .click-effect {
+            color: #ff6666;
+            text-shadow: 0 0 10px #ff6666;
+        }
+
+        .game-container.red-theme .game-world {
+            background: rgba(139, 0, 0, 0.05);
+        }
+
+        .game-container.red-theme .upgrade-info {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .upgrade-details {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .upgrade-stats {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .stat-label {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .upgrade-price,
+        .game-container.red-theme div,
+        .game-container.red-theme span {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .restart-button {
+            background: rgba(255, 0, 85, 0.3);
+            border: 2px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .game-container.red-theme .restart-button:hover {
+            background: rgba(255, 0, 85, 0.4);
+            border-color: #ff6666;
+            color: #ff6666;
+        }
+
+        .game-container.red-theme button:disabled {
+            color: #884444;
+        }
+
+        .game-container.red-theme .sell-button:not(:disabled) {
+            background: linear-gradient(145deg, #cc3333, #aa2222);
+        }
+
+        .game-container.red-theme .sell-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #dd4444, #bb3333);
+        }
+
+        .game-container.red-theme .customize-button:not(:disabled) {
+            background: linear-gradient(145deg, #cc3333, #aa2222);
+        }
+
+        .game-container.red-theme .customize-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #dd4444, #bb3333);
+        }
+
+        .game-container.red-theme .owned-upgrades-display {
+            background: rgba(39, 10, 14, 0.8);
+            border-top: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .upgrade-sprite {
+            background: linear-gradient(145deg, #2e1a1a, #4e2a2a);
+            border: 2px solid #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+        }
+
+        .game-container.red-theme .upgrade-sprite-icon {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .upgrade-sprite-count {
+            background: #ff4444;
+            color: #2a0e14;
+            border: 2px solid #2a0e14;
+        }
+
+        .game-container.red-theme .custom-pc-tooltip {
+            background: #2a0e14;
+            border: 3px solid #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+        }
+
+        .game-container.red-theme .tooltip-header {
+            color: #ff6666;
+            border-bottom: 1px solid #ff4444;
+        }
+
+        .game-container.red-theme .tooltip-part {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .upgrade-icon {
+            color: #ff8888;
+            filter: drop-shadow(0 0 5px rgba(255, 68, 68, 0.5));
+        }
+
+        .game-container.red-theme .modal-content {
+            background: linear-gradient(145deg, #2a0e14, #3a1a1e);
+            border: 3px solid #ff4444;
+            box-shadow: 0 0 50px rgba(255, 68, 68, 0.5);
+        }
+
+        .game-container.red-theme .modal-header {
+            border-bottom: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .modal-title {
+            color: #ff4444;
+            text-shadow: 0 0 10px #ff4444;
+        }
+
+        .game-container.red-theme .part-category-title {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .part-option {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .part-option:hover {
+            background: rgba(255, 68, 68, 0.2);
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+        }
+
+        .game-container.red-theme .part-option.selected {
+            background: rgba(255, 102, 102, 0.3);
+            border-color: #ff6666;
+            box-shadow: 0 0 15px rgba(255, 102, 102, 0.5);
+        }
+
+        .game-container.red-theme .part-name {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .part-cost {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .build-summary {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid #ff4444;
+        }
+
+        .game-container.red-theme .build-preview {
+            background: linear-gradient(145deg, #5f1e1e, #982a2a);
+            border: 3px solid #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .game-container.red-theme .build-stat-label {
+            color: #ff8888;
+        }
+
+        .game-container.red-theme .build-stat-value {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .build-button {
+            background: linear-gradient(145deg, #ff4444, #cc3333);
+        }
+
+        .game-container.red-theme .build-button:hover:not(:disabled) {
+            background: linear-gradient(145deg, #ff6666, #dd4444);
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+        }
+
         /* Raining Dhahab particles */
         .raining-dhahab {
             position: absolute;
@@ -1305,6 +1636,8 @@
             const [frenzyTimeLeft, setFrenzyTimeLeft] = useState(0);
             const [rainingDhahabs, setRainingDhahabs] = useState([]);
             const [showThreadripper, setShowThreadripper] = useState(false);
+            const [supplyChainActive, setSupplyChainActive] = useState(false);
+            const [supplyChainTimeLeft, setSupplyChainTimeLeft] = useState(0);
             const gameWorldRef = useRef(null);
 
             // Splash screen timer
@@ -1374,8 +1707,13 @@
                     total += pc.bps;
                 });
 
+                // Apply supply chain reduction (50% production)
+                if (supplyChainActive) {
+                    total *= 0.5;
+                }
+
                 setTotalBps(total);
-            }, [upgrades, customPCs, overclockerUpgrades]);
+            }, [upgrades, customPCs, overclockerUpgrades, supplyChainActive]);
 
             // Passive income (update 10 times per second)
             useEffect(() => {
@@ -1404,7 +1742,7 @@
 
             // Random dhahab spawning (rare chance)
             useEffect(() => {
-                if (frenzyActive || showDhahab) return;
+                if (frenzyActive || showDhahab || supplyChainActive) return;
                 
                 const checkSpawn = () => {
                     // 5% chance every 3 seconds
@@ -1420,11 +1758,11 @@
                 
                 const interval = setInterval(checkSpawn, 3000);
                 return () => clearInterval(interval);
-            }, [frenzyActive, showDhahab]);
+            }, [frenzyActive, showDhahab, supplyChainActive]);
 
             // Random threadripper spawning
             useEffect(() => {
-                if (showThreadripper) return;
+                if (showThreadripper || supplyChainActive) return;
                 
                 const checkSpawn = () => {
                     // 2% chance every 3 seconds
@@ -1440,7 +1778,62 @@
                 
                 const interval = setInterval(checkSpawn, 3000);
                 return () => clearInterval(interval);
-            }, [showThreadripper]);
+            }, [showThreadripper, supplyChainActive]);
+
+            // Random supply chain issues spawning
+            useEffect(() => {
+                if (supplyChainActive) return;
+                
+                const checkSpawn = () => {
+                    // 3% chance every 5 seconds
+                    const shouldSpawn = Math.random() < 0.03;
+                    if (shouldSpawn) {
+                        setSupplyChainActive(true);
+                        setSupplyChainTimeLeft(15);
+                    }
+                };
+                
+                const interval = setInterval(checkSpawn, 5000);
+                return () => clearInterval(interval);
+            }, [supplyChainActive]);
+
+            // Hide special events during supply chain issues
+            useEffect(() => {
+                if (supplyChainActive) {
+                    setShowDhahab(false);
+                    setShowThreadripper(false);
+                }
+            }, [supplyChainActive]);
+
+            // Supply chain timer countdown
+            useEffect(() => {
+                if (!supplyChainActive || supplyChainTimeLeft <= 0) return;
+                
+                const interval = setInterval(() => {
+                    setSupplyChainTimeLeft(prev => {
+                        if (prev <= 1) {
+                            setSupplyChainActive(false);
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+                
+                return () => clearInterval(interval);
+            }, [supplyChainActive, supplyChainTimeLeft]);
+
+            // Toggle body background during supply chain issues
+            useEffect(() => {
+                if (supplyChainActive) {
+                    document.body.classList.add('supply-chain-bg');
+                } else {
+                    document.body.classList.remove('supply-chain-bg');
+                }
+                
+                return () => {
+                    document.body.classList.remove('supply-chain-bg');
+                };
+            }, [supplyChainActive]);
 
             // Frenzy timer countdown
             useEffect(() => {
@@ -1762,7 +2155,7 @@
                         <div className="splash-loading">Loading...</div>
                     </div>
                 )}
-                <div className="game-container">
+                <div className={`game-container ${supplyChainActive ? 'red-theme' : ''}`}>
                     <div className="stats-panel">
                         <h1>PC CLICKER</h1>
                         <div className="stat">
@@ -1793,6 +2186,17 @@
                                 </div>
                                 <div className="frenzy-timer">{frenzyTimeLeft}s</div>
                             </div>
+                        )}
+                        
+                        {supplyChainActive && (
+                            <>
+                                <div className="supply-chain-overlay"></div>
+                                <div className="supply-chain-timer">{supplyChainTimeLeft}s</div>
+                                <div className="supply-chain-notification">
+                                    ⚠️ SUPPLY CHAIN ISSUES! ⚠️<br/>
+                                    <span style={{fontSize: '24px'}}>Production reduced by 50%</span>
+                                </div>
+                            </>
                         )}
                         
                         {rainingDhahabs.map(particle => (
@@ -1881,6 +2285,22 @@
 
                     <div className="shop-panel">
                         <h2>CLICK POWER</h2>
+                        {supplyChainActive && (
+                            <div style={{
+                                background: 'rgba(220, 20, 60, 0.3)',
+                                border: '2px solid #ff4444',
+                                borderRadius: '8px',
+                                padding: '12px',
+                                marginBottom: '15px',
+                                textAlign: 'center',
+                                color: '#ff8888',
+                                fontSize: '14px',
+                                fontWeight: 'bold'
+                            }}>
+                                ⚠️ PURCHASES DISABLED<br/>
+                                <span style={{fontSize: '12px', opacity: 0.8}}>Supply chain issues active</span>
+                            </div>
+                        )}
                         {CLICK_UPGRADES.map(upgrade => {
                             const currentUpgrade = clickUpgrades[upgrade.id] || { 
                                 count: 0, 
@@ -1906,7 +2326,7 @@
                                     <button 
                                         className="buy-button"
                                         onClick={() => buyClickUpgrade(upgrade.id)}
-                                        disabled={!canAfford}
+                                        disabled={!canAfford || supplyChainActive}
                                     >
                                         BUY - {formatNumber(currentUpgrade.currentCost)} bits
                                     </button>
@@ -1915,6 +2335,7 @@
                                         <button 
                                             className="sell-button"
                                             onClick={() => sellClickUpgrade(upgrade.id)}
+                                            disabled={supplyChainActive}
                                         >
                                             SELL - +{formatNumber(Math.floor((currentUpgrade.currentCost / 1.15) * 0.5))} bits
                                         </button>
@@ -1924,6 +2345,22 @@
                         })}
 
                         <h2 style={{marginTop: '20px'}}>COMPUTERS</h2>
+                        {supplyChainActive && (
+                            <div style={{
+                                background: 'rgba(220, 20, 60, 0.3)',
+                                border: '2px solid #ff4444',
+                                borderRadius: '8px',
+                                padding: '12px',
+                                marginBottom: '15px',
+                                textAlign: 'center',
+                                color: '#ff8888',
+                                fontSize: '14px',
+                                fontWeight: 'bold'
+                            }}>
+                                ⚠️ PURCHASES DISABLED<br/>
+                                <span style={{fontSize: '12px', opacity: 0.8}}>Supply chain issues active</span>
+                            </div>
+                        )}
                         {BASE_UPGRADES.map(upgrade => {
                             if (upgrade.isCustom) {
                                 return (
@@ -1942,8 +2379,9 @@
                                             <button 
                                                 className="customize-button"
                                                 onClick={openPCBuilder}
+                                                disabled={supplyChainActive}
                                             >
-                                                🔧 CUSTOMIZE
+                                                {supplyChainActive ? '⚠️ SUPPLY CHAIN' : '🔧 CUSTOMIZE'}
                                             </button>
                                         </div>
                                     </div>
@@ -1986,7 +2424,7 @@
                                     <button 
                                         className="buy-button"
                                         onClick={() => buyUpgrade(upgrade.id)}
-                                        disabled={!canAfford}
+                                        disabled={!canAfford || supplyChainActive}
                                     >
                                         BUY - {formatNumber(currentUpgrade.currentCost)} bits
                                     </button>
@@ -1995,6 +2433,7 @@
                                         <button 
                                             className="sell-button"
                                             onClick={() => sellUpgrade(upgrade.id)}
+                                            disabled={supplyChainActive}
                                         >
                                             SELL - +{formatNumber(Math.floor((currentUpgrade.currentCost / 1.15) * 0.5))} bits
                                         </button>
@@ -2004,6 +2443,22 @@
                         })}
                         
                         <h2 style={{marginTop: '20px'}}>COMPUTER OVERCLOCKERS</h2>
+                        {supplyChainActive && (
+                            <div style={{
+                                background: 'rgba(220, 20, 60, 0.3)',
+                                border: '2px solid #ff4444',
+                                borderRadius: '8px',
+                                padding: '12px',
+                                marginBottom: '15px',
+                                textAlign: 'center',
+                                color: '#ff8888',
+                                fontSize: '14px',
+                                fontWeight: 'bold'
+                            }}>
+                                ⚠️ PURCHASES DISABLED<br/>
+                                <span style={{fontSize: '12px', opacity: 0.8}}>Supply chain issues active</span>
+                            </div>
+                        )}
                         {OVERCLOCKER_UPGRADES.map(overclocker => {
                             // Hide everything overclocker until everything computer is bought
                             if (overclocker.id === 'everything_overclock') {
@@ -2045,7 +2500,7 @@
                                     <button 
                                         className="buy-button"
                                         onClick={() => buyOverclocker(overclocker.id)}
-                                        disabled={!canAfford || !hasTargetComputer}
+                                        disabled={!canAfford || !hasTargetComputer || supplyChainActive}
                                     >
                                         BUY - {formatNumber(currentOverclocker.currentCost)} bits
                                     </button>
@@ -2054,6 +2509,7 @@
                                         <button 
                                             className="sell-button"
                                             onClick={() => sellOverclocker(overclocker.id)}
+                                            disabled={supplyChainActive}
                                         >
                                             SELL - +{formatNumber(Math.floor((currentOverclocker.currentCost / 2) * 0.5))} bits
                                         </button>
@@ -2090,6 +2546,7 @@
                                     <button 
                                         className="sell-button"
                                         onClick={() => sellCustomPC(index)}
+                                        disabled={supplyChainActive}
                                     >
                                         SELL - +{formatNumber(Math.floor(pc.cost * 0.5))} bits
                                     </button>
@@ -2124,6 +2581,7 @@
                             partPurchaseCounts={partPurchaseCounts}
                             onClose={closePCBuilder}
                             onBuild={buildCustomPC}
+                            supplyChainActive={supplyChainActive}
                         />
                     )}
                 </div>
@@ -2131,7 +2589,7 @@
             );
         }
 
-        function PCBuilderModal({ bits, partPurchaseCounts, onClose, onBuild }) {
+        function PCBuilderModal({ bits, partPurchaseCounts, onClose, onBuild, supplyChainActive }) {
             const [selectedParts, setSelectedParts] = useState({
                 cpu: null,
                 gpu: null,
@@ -2185,7 +2643,7 @@
 
             const totalCost = calculateTotalCost();
             const totalBps = calculateTotalBps();
-            const canBuild = allPartsSelected() && bits >= totalCost;
+            const canBuild = allPartsSelected() && bits >= totalCost && !supplyChainActive;
 
             const handleBuild = () => {
                 if (canBuild) {
@@ -2259,6 +2717,7 @@
                                     disabled={!canBuild}
                                 >
                                     {!allPartsSelected() ? 'SELECT ALL PARTS' : 
+                                     supplyChainActive ? '⚠️ SUPPLY CHAIN ISSUES' :
                                      bits < totalCost ? 'NOT ENOUGH BITS' : 
                                      '🔨 BUILD PC'}
                                 </button>

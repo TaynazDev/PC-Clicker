@@ -3,6 +3,21 @@
 ## Latest Updates - February 15, 2026
 
 ### New Features
+- **Supply Chain Issues Event** - Rare negative event that disrupts gameplay
+  - 3% spawn chance every 5 seconds for challenging gameplay
+  - Lasts 15 seconds when triggered
+  - **Production Impact**: Reduces all bits per second by 50%
+  - **Purchase Lockdown**: Disables all buy/sell buttons and PC building
+  - **Visual Transformation**: Complete red theme takeover
+    - Background switches to error.gif
+    - All UI borders, text, and elements turn red
+    - Red pulsing overlay on screen
+    - Large countdown timer shows time remaining
+    - Warning messages in all shop sections
+  - **Event Blocking**: Prevents dhahab and threadripper from spawning during crisis
+  - **Shop Display**: Shows "⚠️ PURCHASES DISABLED" banners
+  - **Build Button**: Changes to "⚠️ SUPPLY CHAIN ISSUES"
+
 - **Splash Screen** - Added animated splash screen when starting the game
   - Displays PC.png logo with glowing effect
   - Cinematic zoom-in animation from 30% to 120% scale
