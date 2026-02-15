@@ -304,6 +304,8 @@
             height: 150px;
             background: rgba(10, 14, 39, 0.8);
             border-top: 2px solid #00ff88;
+            border-left: 2px solid #00ff88;
+            border-right: 2px solid #00ff88;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -1335,6 +1337,274 @@
             100% {
                 right: -120px;
                 top: 30%;
+            }
+        }
+
+        /* Responsive Design - Media Queries */
+        
+        /* Tablets and smaller laptops (up to 1024px) */
+        @media (max-width: 1024px) {
+            .stats-panel {
+                width: 200px;
+            }
+            
+            .shop-panel {
+                width: 250px;
+            }
+            
+            .main-pc {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .owned-upgrades-display {
+                left: 200px;
+                right: 250px;
+                height: 120px;
+                padding: 15px;
+            }
+            
+            .upgrade-sprite {
+                min-width: 60px;
+                height: 60px;
+            }
+            
+            .modal-content {
+                max-width: 600px;
+                padding: 25px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+        }
+        
+        /* Small tablets and large phones (up to 768px) */
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+            }
+            
+            .stats-panel {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 2px solid #00ff88;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .stats-panel h1 {
+                width: 100%;
+                font-size: 20px;
+                text-align: center;
+            }
+            
+            .stat {
+                flex: 1;
+                min-width: 120px;
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .restart-button {
+                width: auto;
+                flex: 1;
+                margin-top: 0;
+            }
+            
+            .shop-panel {
+                width: 100%;
+                height: 300px;
+                border-left: none;
+                border-top: 2px solid #00ff88;
+                padding: 15px;
+            }
+            
+            .main-pc {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .owned-upgrades-display {
+                position: relative;
+                left: 0;
+                right: 0;
+                height: 100px;
+                padding: 10px;
+                border-top: 2px solid #00ff88;
+                border-left: none;
+                border-right: none;
+            }
+            
+            .upgrade-sprite {
+                min-width: 50px;
+                height: 50px;
+            }
+            
+            .upgrade-sprite-count {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+            
+            .modal-content {
+                max-width: 90%;
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .modal-title {
+                font-size: 18px;
+            }
+            
+            .pc-builder {
+                flex-direction: column;
+            }
+            
+            .close-button {
+                width: 30px;
+                height: 30px;
+                font-size: 20px;
+            }
+        }
+        
+        /* Mobile phones (up to 480px) */
+        @media (max-width: 480px) {
+            .stats-panel {
+                padding: 8px;
+                gap: 8px;
+            }
+            
+            .stats-panel h1 {
+                font-size: 18px;
+                padding-bottom: 8px;
+            }
+            
+            .stat {
+                min-width: 100px;
+                padding: 8px;
+            }
+            
+            .stat-label {
+                font-size: 10px;
+            }
+            
+            .stat-value {
+                font-size: 16px;
+            }
+            
+            .restart-button {
+                padding: 8px;
+                font-size: 12px;
+            }
+            
+            .main-pc {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .pc-sprite {
+                border: 3px solid #00ff88;
+                padding: 5px;
+            }
+            
+            .shop-panel {
+                height: 250px;
+                padding: 10px;
+            }
+            
+            .shop-panel h2 {
+                font-size: 16px;
+                padding-bottom: 8px;
+                margin-bottom: 15px;
+            }
+            
+            .upgrade-item {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .upgrade-icon {
+                font-size: 24px;
+            }
+            
+            .upgrade-icon-img {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .upgrade-title {
+                font-size: 14px;
+            }
+            
+            .upgrade-description {
+                font-size: 10px;
+            }
+            
+            .upgrade-stats {
+                font-size: 11px;
+            }
+            
+            .upgrade-button {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .owned-upgrades-display {
+                height: 80px;
+                padding: 8px;
+                gap: 10px;
+            }
+            
+            .upgrade-sprite {
+                min-width: 40px;
+                height: 40px;
+            }
+            
+            .upgrade-sprite-icon {
+                font-size: 20px;
+            }
+            
+            .upgrade-sprite-count {
+                width: 18px;
+                height: 18px;
+                font-size: 9px;
+            }
+            
+            .click-effect {
+                font-size: 18px;
+            }
+            
+            .click-effect-image {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                padding: 15px;
+                margin: 5px;
+            }
+            
+            .modal-title {
+                font-size: 16px;
+            }
+            
+            .modal-header {
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .close-button {
+                width: 28px;
+                height: 28px;
+                font-size: 18px;
             }
         }
     </style>

@@ -3,6 +3,24 @@
 ## Latest Updates - February 15, 2026
 
 ### New Features
+- **Responsive Design** - Game now adapts to different screen sizes and devices
+  - **Tablet Support (up to 1024px)**: Optimized panel sizes and spacing
+  - **Mobile Tablet (up to 768px)**: Reorganized layout with stats on top, shop on bottom
+  - **Mobile Phone (up to 480px)**: Compact design with touch-friendly elements
+  - All text, buttons, and UI elements scale appropriately
+  - PC builder modal adapts to smaller screens
+  - Maintained visual style across all device sizes
+
+### UI Improvements
+- **Inventory Bar Borders** - Added left and right borders to the bottom inventory display
+  - Completes the bordered frame around the owned upgrades section
+  - Matches the design consistency of other UI panels
+
+---
+
+## Previous Updates - February 15, 2026
+
+### New Features
 - **Supply Chain Issues Event** - Rare negative event that disrupts gameplay
   - 3% spawn chance every 5 seconds for challenging gameplay
   - Lasts 15 seconds when triggered
