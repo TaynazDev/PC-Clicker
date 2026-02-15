@@ -106,6 +106,108 @@
             transform: scale(0.98);
         }
 
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .splash-screen.fade-out {
+            animation: fadeOutZoom 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeOutZoom {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        .splash-logo {
+            width: 900px;
+            height: 900px;
+            margin-bottom: 30px;
+            animation: zoomIn 2.5s ease-out forwards;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.6));
+        }
+
+        .splash-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .splash-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 20px #00ff88;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+        }
+
+        .splash-loading {
+            font-size: 18px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
         /* Center area - Game world */
         .game-world {
             flex: 1;
@@ -1185,6 +1287,8 @@
         ];
 
         function App() {
+            const [showSplash, setShowSplash] = useState(true);
+            const [splashFadingOut, setSplashFadingOut] = useState(false);
             const [bits, setBits] = useState(0);
             const [totalBps, setTotalBps] = useState(0);
             const [clickPower, setClickPower] = useState(1);
@@ -1202,6 +1306,22 @@
             const [rainingDhahabs, setRainingDhahabs] = useState([]);
             const [showThreadripper, setShowThreadripper] = useState(false);
             const gameWorldRef = useRef(null);
+
+            // Splash screen timer
+            useEffect(() => {
+                const fadeTimer = setTimeout(() => {
+                    setSplashFadingOut(true);
+                }, 2500); // Show splash for 2.5 seconds
+
+                const hideTimer = setTimeout(() => {
+                    setShowSplash(false);
+                }, 3000); // Hide after fade animation (500ms)
+
+                return () => {
+                    clearTimeout(fadeTimer);
+                    clearTimeout(hideTimer);
+                };
+            }, []);
 
             // Initialize game state from localStorage
             useEffect(() => {
@@ -1632,6 +1752,16 @@
             };
 
             return (
+                <>
+                {showSplash && (
+                    <div className={`splash-screen ${splashFadingOut ? 'fade-out' : ''}`}>
+                        <div className="splash-logo">
+                            <img src="./PC.png" alt="PC Clicker" />
+                        </div>
+                        <div className="splash-title">PC CLICKER</div>
+                        <div className="splash-loading">Loading...</div>
+                    </div>
+                )}
                 <div className="game-container">
                     <div className="stats-panel">
                         <h1>PC CLICKER</h1>
@@ -1997,6 +2127,7 @@
                         />
                     )}
                 </div>
+                </>
             );
         }
 

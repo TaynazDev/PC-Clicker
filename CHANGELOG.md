@@ -1,6 +1,17 @@
 # PC Clicker - Change Log
 
-## Latest Updates - February 12, 2026
+## Latest Updates - February 15, 2026
+
+### New Features
+- **Splash Screen** - Added animated splash screen when starting the game
+  - Displays PC.png logo with glowing effect
+  - Cinematic zoom-in animation from 30% to 120% scale
+  - Shows game title and loading text
+  - Zooms and fades out after 2.5 seconds before starting game
+
+---
+
+## Previous Updates - February 12, 2026
 
 ### New Features
 - **Custom PC Overclocker** - Added overclocker upgrade for Custom PC builds
