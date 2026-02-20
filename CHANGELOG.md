@@ -1,6 +1,43 @@
 # PC Clicker - Change Log
 
-## Latest Updates - February 15, 2026
+## Latest Updates - February 20, 2026
+
+### Supply Chain Event Enhancements
+- **Increased Supply Chain Severity** - Major changes to make the event more impactful
+  - **Complete Production Halt**: Changed from 50% reduction to 0% - all production stops
+  - **Motherboard Disabled**: PC is now unclickable during supply chain issues
+    - Visual feedback: 50% opacity and "not-allowed" cursor
+    - Prevents all manual clicking
+  - **UI Indicators**: Bits per click displays 0 during the event
+  - **Complete Red Theme**: All UI elements now turn red
+    - Zoom controls turn red
+    - Owned upgrades display borders (left/right) turn red
+    - All panels, buttons, and borders affected
+  - **Updated Notification**: Message changed from "Production reduced by 50%" to "All production HALTED"
+
+---
+
+## Previous Updates - February 20, 2026
+
+### New Features
+- **User-Adjustable Zoom Controls** - Added zoom controls to adapt to different screen sizes and display scaling
+  - Located in the left stats panel below the restart button
+  - **Zoom In/Out buttons** (+/-) to adjust from 50% to 150%
+  - **Reset button** to return to 100% zoom
+  - **Persistent zoom** - Saves preference in localStorage
+  - **Smooth transitions** when zooming
+  - **Auto-hidden** on mobile devices (768px and below)
+  - Perfect for laptops with Windows display scaling enabled
+
+### UI Improvements
+- **Enhanced Responsive Design** - Added more breakpoints for better laptop support
+  - Multiple laptop breakpoints: 1600px, 1440px, 1366px, 1280px
+  - Height-based media queries for laptops with limited vertical space (900px, 768px)
+  - Better scaling across different laptop resolutions
+
+---
+
+## Previous Updates - February 15, 2026
 
 ### New Features
 - **Responsive Design** - Game now adapts to different screen sizes and devices

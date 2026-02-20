@@ -1144,6 +1144,20 @@
             box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
         }
 
+        .game-container.red-theme .main-pc {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .game-container.red-theme .main-pc:hover {
+            transform: none;
+        }
+
+        .game-container.red-theme .main-pc:active {
+            transform: none;
+        }
+
         .game-container.red-theme .click-effect {
             color: #ff6666;
             text-shadow: 0 0 10px #ff6666;
@@ -1187,6 +1201,30 @@
             color: #ff6666;
         }
 
+        .game-container.red-theme .zoom-controls {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+        }
+
+        .game-container.red-theme .zoom-button {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+
+        .game-container.red-theme .zoom-button:hover {
+            background: rgba(255, 68, 68, 0.3);
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+        }
+
+        .game-container.red-theme .zoom-display {
+            color: #ff6666;
+        }
+
+        .game-container.red-theme .zoom-label {
+            color: #ff8888;
+        }
+
         .game-container.red-theme button:disabled {
             color: #884444;
         }
@@ -1210,6 +1248,8 @@
         .game-container.red-theme .owned-upgrades-display {
             background: rgba(39, 10, 14, 0.8);
             border-top: 2px solid #ff4444;
+            border-left: 2px solid #ff4444;
+            border-right: 2px solid #ff4444;
         }
 
         .game-container.red-theme .upgrade-sprite {
@@ -2201,9 +2241,9 @@
                     total += pc.bps;
                 });
 
-                // Apply supply chain reduction (50% production)
+                // Apply supply chain reduction (cancel all production)
                 if (supplyChainActive) {
-                    total *= 0.5;
+                    total = 0;
                 }
 
                 setTotalBps(total);
@@ -2389,6 +2429,9 @@
             }, [frenzyActive]);
 
             const handlePCClick = (e) => {
+                // Disable clicking during supply chain issues
+                if (supplyChainActive) return;
+                
                 const multiplier = frenzyActive ? 2 : 1;
                 const clickValue = clickPower * multiplier;
                 setBits(prev => prev + clickValue);
@@ -2680,7 +2723,7 @@
                         </div>
                         <div className="stat">
                             <div className="stat-label">BITS PER CLICK</div>
-                            <div className="stat-value">{formatNumber(clickPower * (frenzyActive ? 2 : 1))}</div>
+                            <div className="stat-value">{formatNumber(supplyChainActive ? 0 : clickPower * (frenzyActive ? 2 : 1))}</div>
                         </div>
                         <div className="stat">
                             <div className="stat-label">BITS PER SECOND</div>
@@ -2719,7 +2762,7 @@
                                 <div className="supply-chain-timer">{supplyChainTimeLeft}s</div>
                                 <div className="supply-chain-notification">
                                     ⚠️ SUPPLY CHAIN ISSUES! ⚠️<br/>
-                                    <span style={{fontSize: '24px'}}>Production reduced by 50%</span>
+                                    <span style={{fontSize: '24px'}}>All production HALTED</span>
                                 </div>
                             </>
                         )}
