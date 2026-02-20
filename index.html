@@ -18,8 +18,10 @@
             font-family: 'Courier New', monospace;
             background: url('./assets/images/36013.gif') center/cover no-repeat fixed;
             color: #00ff88;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
+            width: 100vw;
+            height: 100vh;
         }
 
         body.supply-chain-bg {
@@ -44,9 +46,14 @@
 
         .game-container {
             display: flex;
+            width: 100vw;
             height: 100vh;
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
             z-index: 1;
+            transition: transform 0.3s ease;
+            transform-origin: center center;
         }
 
         /* Left panel - Stats */
@@ -112,6 +119,59 @@
 
         .restart-button:active {
             transform: scale(0.98);
+        }
+
+        /* Zoom Controls */
+        .zoom-controls {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+        }
+
+        .zoom-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .zoom-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .zoom-button {
+            flex: 1;
+            padding: 8px;
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            color: #00ff88;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .zoom-button:hover {
+            background: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+        }
+
+        .zoom-button:active {
+            transform: scale(0.95);
+        }
+
+        .zoom-display {
+            text-align: center;
+            font-size: 14px;
+            color: #00ffff;
+            font-weight: bold;
+            min-width: 50px;
         }
 
         /* Splash Screen */
@@ -1342,6 +1402,100 @@
 
         /* Responsive Design - Media Queries */
         
+        /* Standard laptops (up to 1600px) */
+        @media (max-width: 1600px) {
+            .stats-panel {
+                width: 230px;
+            }
+            
+            .shop-panel {
+                width: 290px;
+            }
+            
+            .owned-upgrades-display {
+                left: 230px;
+                right: 290px;
+            }
+        }
+        
+        /* Smaller laptops (up to 1440px) */
+        @media (max-width: 1440px) {
+            .stats-panel {
+                width: 220px;
+            }
+            
+            .shop-panel {
+                width: 280px;
+            }
+            
+            .main-pc {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .owned-upgrades-display {
+                left: 220px;
+                right: 280px;
+            }
+        }
+        
+        /* Common laptop size (up to 1366px) */
+        @media (max-width: 1366px) {
+            .stats-panel {
+                width: 210px;
+                padding: 18px;
+            }
+            
+            .shop-panel {
+                width: 270px;
+                padding: 18px;
+            }
+            
+            .main-pc {
+                width: 260px;
+                height: 260px;
+            }
+            
+            .owned-upgrades-display {
+                left: 210px;
+                right: 270px;
+                height: 135px;
+            }
+        }
+        
+        /* Small laptops (up to 1280px) */
+        @media (max-width: 1280px) {
+            .stats-panel {
+                width: 200px;
+                padding: 15px;
+            }
+            
+            .shop-panel {
+                width: 260px;
+                padding: 15px;
+            }
+            
+            .main-pc {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .owned-upgrades-display {
+                left: 200px;
+                right: 260px;
+                height: 130px;
+                padding: 15px;
+            }
+            
+            .stat {
+                padding: 12px;
+            }
+            
+            .stat-value {
+                font-size: 20px;
+            }
+        }
+        
         /* Tablets and smaller laptops (up to 1024px) */
         @media (max-width: 1024px) {
             .stats-panel {
@@ -1451,6 +1605,10 @@
                 width: 20px;
                 height: 20px;
                 font-size: 10px;
+            }
+            
+            .zoom-controls {
+                display: none;
             }
             
             .modal-content {
@@ -1605,6 +1763,68 @@
                 width: 28px;
                 height: 28px;
                 font-size: 18px;
+            }
+        }
+        
+        /* Height-based media query for laptops with small vertical space */
+        @media (max-height: 900px) {
+            .stats-panel {
+                gap: 12px;
+                padding: 15px;
+            }
+            
+            .stat {
+                padding: 10px;
+            }
+            
+            .main-pc {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .owned-upgrades-display {
+                height: 110px;
+                padding: 12px;
+            }
+            
+            .upgrade-sprite {
+                min-width: 55px;
+                height: 55px;
+            }
+        }
+        
+        @media (max-height: 768px) {
+            .stats-panel {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .stats-panel h1 {
+                font-size: 20px;
+                padding-bottom: 8px;
+            }
+            
+            .stat {
+                padding: 8px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            .main-pc {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .owned-upgrades-display {
+                height: 100px;
+                padding: 10px;
+            }
+            
+            .upgrade-sprite {
+                min-width: 50px;
+                height: 50px;
             }
         }
     </style>
@@ -1908,6 +2128,10 @@
             const [showThreadripper, setShowThreadripper] = useState(false);
             const [supplyChainActive, setSupplyChainActive] = useState(false);
             const [supplyChainTimeLeft, setSupplyChainTimeLeft] = useState(0);
+            const [zoomLevel, setZoomLevel] = useState(() => {
+                const savedZoom = localStorage.getItem('pcClickerZoom');
+                return savedZoom ? parseFloat(savedZoom) : 1.0;
+            });
             const gameWorldRef = useRef(null);
 
             // Splash screen timer
@@ -2009,6 +2233,11 @@
                 };
                 localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
             }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower]);
+
+            // Save zoom level
+            useEffect(() => {
+                localStorage.setItem('pcClickerZoom', zoomLevel.toString());
+            }, [zoomLevel]);
 
             // Random dhahab spawning (rare chance)
             useEffect(() => {
@@ -2399,6 +2628,18 @@
                 }
             };
 
+            const zoomIn = () => {
+                setZoomLevel(prev => Math.min(prev + 0.1, 1.5));
+            };
+
+            const zoomOut = () => {
+                setZoomLevel(prev => Math.max(prev - 0.1, 0.5));
+            };
+
+            const resetZoom = () => {
+                setZoomLevel(1.0);
+            };
+
             const restartGame = () => {
                 if (confirm('Are you sure you want to restart? All progress will be lost!')) {
                     localStorage.removeItem('pcClickerSave');
@@ -2425,7 +2666,12 @@
                         <div className="splash-loading">Loading...</div>
                     </div>
                 )}
-                <div className={`game-container ${supplyChainActive ? 'red-theme' : ''}`}>
+                <div 
+                    className={`game-container ${supplyChainActive ? 'red-theme' : ''}`}
+                    style={{
+                        transform: `scale(${zoomLevel})`
+                    }}
+                >
                     <div className="stats-panel">
                         <h1>PC CLICKER</h1>
                         <div className="stat">
@@ -2443,6 +2689,15 @@
                         <button className="restart-button" onClick={restartGame}>
                             🔄 RESTART GAME
                         </button>
+                        <div className="zoom-controls">
+                            <div className="zoom-label">ZOOM LEVEL</div>
+                            <div className="zoom-buttons">
+                                <button className="zoom-button" onClick={zoomOut} title="Zoom Out">-</button>
+                                <div className="zoom-display">{Math.round(zoomLevel * 100)}%</div>
+                                <button className="zoom-button" onClick={zoomIn} title="Zoom In">+</button>
+                            </div>
+                            <button className="zoom-button" onClick={resetZoom} style={{ marginTop: '5px' }} title="Reset Zoom">Reset</button>
+                        </div>
                     </div>
 
                     <div className="game-world" ref={gameWorldRef}>
