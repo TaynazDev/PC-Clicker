@@ -1867,6 +1867,217 @@
                 height: 50px;
             }
         }
+
+        /* Milestone Styles */
+        .milestone-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            border: 2px solid #ffa500;
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .milestone-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .milestone-button-count {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .milestone-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.98) 0%, rgba(247, 147, 30, 0.98) 100%);
+            border: 3px solid #ffa500;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 165, 0, 0.4);
+            cursor: pointer;
+            animation: milestonePopIn 0.5s ease-out;
+            max-width: 500px;
+        }
+
+        @keyframes milestonePopIn {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .milestone-notification-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .milestone-notification-icon {
+            font-size: 64px;
+        }
+
+        .milestone-notification-text {
+            flex: 1;
+            color: white;
+        }
+
+        .milestone-notification-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .milestone-notification-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .milestone-notification-desc {
+            font-size: 16px;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        .milestone-modal-content {
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .milestone-count {
+            font-size: 14px;
+            color: #ffa500;
+            font-weight: bold;
+        }
+
+        .milestone-categories {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            border-bottom: 2px solid #00ff88;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .category-tab.active {
+            background: #00ff88;
+            color: #0a0e27;
+        }
+
+        .milestone-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 15px;
+        }
+
+        .milestone-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .milestone-card.completed {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+            border-color: #ffa500;
+        }
+
+        .milestone-card.locked {
+            opacity: 0.5;
+        }
+
+        .milestone-icon {
+            font-size: 40px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .milestone-info {
+            flex: 1;
+        }
+
+        .milestone-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+
+        .milestone-card.completed .milestone-name {
+            color: #ffa500;
+        }
+
+        .milestone-description {
+            font-size: 13px;
+            color: #00ff88;
+            font-style: italic;
+        }
+
+        .milestone-card.locked .milestone-description {
+            color: #666;
+        }
+
+        .milestone-check {
+            font-size: 30px;
+            color: #00ff88;
+        }
+
+        @media (max-width: 768px) {
+            .milestone-notification {
+                max-width: 90%;
+                padding: 20px;
+            }
+
+            .milestone-modal-content {
+                max-width: 95%;
+            }
+
+            .milestone-list {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .category-tab {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2147,6 +2358,65 @@
             }
         ];
 
+        const MILESTONES = [
+            // Progress Milestones
+            { id: 'first_click', name: 'Baby Steps', description: 'Made your first click. Welcome to the addiction!', category: 'progress', icon: '👆', check: (stats) => stats.totalClicks >= 1 },
+            { id: 'click_100', name: 'Click Enthusiast', description: 'Great Scott! 100 clicks already!', category: 'progress', icon: '🖱️', check: (stats) => stats.totalClicks >= 100 },
+            { id: 'click_1k', name: 'Click to the Future', description: 'Great Scott! That\'s a lot of clicking!', category: 'progress', icon: '⚡', check: (stats) => stats.totalClicks >= 1000 },
+            { id: 'click_10k', name: 'Carpel Tunnel Incoming', description: 'Your mouse is filing for workers\' comp', category: 'progress', icon: '🩹', check: (stats) => stats.totalClicks >= 10000 },
+            { id: 'click_100k', name: 'Professional Clicker', description: 'You\'ve got this down to a science', category: 'progress', icon: '🔬', check: (stats) => stats.totalClicks >= 100000 },
+            { id: 'click_1m', name: 'The Click Whisperer', description: 'At this point, clicks happen before you even think about it', category: 'progress', icon: '🧘', check: (stats) => stats.totalClicks >= 1000000 },
+            
+            { id: 'bits_1k', name: 'Bit of a Start', description: 'You\'ve got a few bits to spare!', category: 'progress', icon: '💾', check: (stats) => stats.lifetimeBits >= 1000 },
+            { id: 'bits_1m', name: 'Megabyte Mogul', description: 'That\'s roughly 8 floppy disks!', category: 'progress', icon: '💿', check: (stats) => stats.lifetimeBits >= 1000000 },
+            { id: 'bits_1b', name: 'Bit of a Problem', description: 'That\'s byte-sized dedication!', category: 'progress', icon: '💽', check: (stats) => stats.lifetimeBits >= 1000000000 },
+            { id: 'bits_1t', name: 'Terabyte Tycoon', description: 'You could store SO many cat videos', category: 'progress', icon: '🗄️', check: (stats) => stats.lifetimeBits >= 1000000000000 },
+            
+            { id: 'bps_1k', name: 'Passive Income', description: '1K bits per second! Now we\'re cooking!', category: 'progress', icon: '🔥', check: (stats, state) => state.totalBps >= 1000 },
+            { id: 'bps_1m', name: 'Core Values', description: 'Your CPU cores are working overtime!', category: 'progress', icon: '⚙️', check: (stats, state) => state.totalBps >= 1000000 },
+            { id: 'bps_1b', name: 'Gigahertz Grind', description: 'Those clock speeds are insane!', category: 'progress', icon: '🚀', check: (stats, state) => state.totalBps >= 1000000000 },
+            
+            // Collection Milestones
+            { id: 'computer_first', name: 'First Build', description: 'Bought your first computer. It ain\'t much, but it\'s honest work', category: 'collection', icon: '🖥️', check: (stats, state) => Object.values(state.upgrades).some(u => u.count > 0) },
+            { id: 'computer_10', name: 'Computer Collector', description: 'You\'ve got a hardware habit!', category: 'collection', icon: '🏪', check: (stats, state) => Object.values(state.upgrades).reduce((sum, u) => sum + u.count, 0) >= 10 },
+            { id: 'computer_50', name: 'Computer Hoarder', description: 'At this point, just open a Best Buy', category: 'collection', icon: '🏬', check: (stats, state) => Object.values(state.upgrades).reduce((sum, u) => sum + u.count, 0) >= 50 },
+            { id: 'computer_100', name: 'Data Center Dad', description: 'You\'re basically running AWS now', category: 'collection', icon: '🏭', check: (stats, state) => Object.values(state.upgrades).reduce((sum, u) => sum + u.count, 0) >= 100 },
+            { id: 'computer_500', name: 'Skynet\'s Ancestor', description: 'The robots will remember this', category: 'collection', icon: '🤖', check: (stats, state) => Object.values(state.upgrades).reduce((sum, u) => sum + u.count, 0) >= 500 },
+            
+            { id: 'custom_pc_1', name: 'Custom Built Different', description: 'Built your first custom PC! Cable management not included', category: 'collection', icon: '🔧', check: (stats) => stats.customPCsBuilt >= 1 },
+            { id: 'custom_pc_5', name: 'PC Building Simulator', description: 'You\'re basically a systems integrator now', category: 'collection', icon: '🛠️', check: (stats) => stats.customPCsBuilt >= 5 },
+            { id: 'custom_pc_25', name: 'RGB Everything', description: 'If it doesn\'t glow, it doesn\'t go!', category: 'collection', icon: '🌈', check: (stats) => stats.customPCsBuilt >= 25 },
+            
+            { id: 'all_click_upgrades', name: 'Point and Click Adventure', description: 'Bought all click upgrade types. Your finger has evolved!', category: 'collection', icon: '👉', check: (stats, state) => Object.keys(state.clickUpgrades).length >= 6 },
+            { id: 'all_base_computers', name: 'Gotta Compute Em All', description: 'Owned at least one of every base computer type', category: 'collection', icon: '📦', check: (stats, state) => Object.keys(state.upgrades).filter(k => state.upgrades[k].count > 0).length >= 8 },
+            
+            // Event Milestones
+            { id: 'dhahab_1', name: 'Golden Opportunity', description: 'Clicked your first Dhahab. Shiny!', category: 'events', icon: '✨', check: (stats) => stats.dhahabClicks >= 1 },
+            { id: 'dhahab_10', name: 'Dhahab Digger', description: 'That\'s some serious gold mining!', category: 'events', icon: '⛏️', check: (stats) => stats.dhahabClicks >= 10 },
+            { id: 'dhahab_50', name: 'Midas Touch', description: 'Everything you click turns to gold!', category: 'events', icon: '👑', check: (stats) => stats.dhahabClicks >= 50 },
+            
+            { id: 'threadripper_1', name: 'Thread the Needle', description: 'You\'ve got some serious thread count', category: 'events', icon: '🧵', check: (stats) => stats.threadripperClicks >= 1 },
+            { id: 'threadripper_10', name: 'Thread Collector', description: 'AMD would be proud!', category: 'events', icon: '🎯', check: (stats) => stats.threadripperClicks >= 10 },
+            
+            { id: 'supply_chain_1', name: 'Out of Stock', description: 'Survived your first supply chain crisis. Thanks, scalpers', category: 'events', icon: '📉', check: (stats) => stats.supplyChainsSurvived >= 1 },
+            { id: 'supply_chain_10', name: 'Supply and Demand Issues', description: 'Sheesh, the supply company must be really bad', category: 'events', icon: '🚛', check: (stats) => stats.supplyChainsSurvived >= 10 },
+            { id: 'supply_chain_25', name: 'Crisis Management', description: 'You should update your resume with this skill', category: 'events', icon: '📋', check: (stats) => stats.supplyChainsSurvived >= 25 },
+            
+            // Upgrade Milestones
+            { id: 'overclocker_1', name: 'Mild Overclock', description: 'Bought your first overclocker. Time to void some warranties!', category: 'upgrades', icon: '⚡', check: (stats, state) => Object.values(state.overclockerUpgrades).some(u => u.count > 0) },
+            { id: 'overclocker_10', name: 'Overclocking Addiction', description: 'Stock speeds are for cowards!', category: 'upgrades', icon: '🔥', check: (stats, state) => Object.values(state.overclockerUpgrades).reduce((sum, u) => sum + u.count, 0) >= 10 },
+            { id: 'overclocker_50', name: 'Thermal Paste Enthusiast', description: 'You buy it in bulk now, don\'t you?', category: 'upgrades', icon: '🧴', check: (stats, state) => Object.values(state.overclockerUpgrades).reduce((sum, u) => sum + u.count, 0) >= 50 },
+            
+            // Economy Milestones
+            { id: 'first_purchase', name: 'Buyer\'s Remorse', description: 'Bought something! Let\'s hope it was worth it', category: 'economy', icon: '💳', check: (stats) => stats.totalUpgradesPurchased >= 1 },
+            { id: 'purchases_50', name: 'Shopping Spree', description: 'Money can\'t buy happiness, but it can buy computers!', category: 'economy', icon: '🛒', check: (stats) => stats.totalUpgradesPurchased >= 50 },
+            { id: 'purchases_250', name: 'Upgrade Addict', description: 'Your wallet is crying', category: 'economy', icon: '💸', check: (stats) => stats.totalUpgradesPurchased >= 250 },
+            
+            { id: 'first_sell', name: 'Penny Pincher', description: 'Sold your first item. One person\'s trash is... still your trash', category: 'economy', icon: '♻️', check: (stats) => stats.totalSold >= 1 },
+            { id: 'sell_50', name: 'Garage Sale Guru', description: 'You\'re the Marie Kondo of PC hardware', category: 'economy', icon: '🏷️', check: (stats) => stats.totalSold >= 50 },
+            { id: 'sell_200', name: 'eBay Power Seller', description: 'Buy high, sell low! Wait...', category: 'economy', icon: '📦', check: (stats) => stats.totalSold >= 200 }
+        ];
+
         function App() {
             const [showSplash, setShowSplash] = useState(true);
             const [splashFadingOut, setSplashFadingOut] = useState(false);
@@ -2172,6 +2442,22 @@
                 const savedZoom = localStorage.getItem('pcClickerZoom');
                 return savedZoom ? parseFloat(savedZoom) : 1.0;
             });
+            
+            // Milestone system state
+            const [milestoneStats, setMilestoneStats] = useState({
+                totalClicks: 0,
+                lifetimeBits: 0,
+                dhahabClicks: 0,
+                threadripperClicks: 0,
+                supplyChainsSurvived: 0,
+                totalUpgradesPurchased: 0,
+                totalSold: 0,
+                customPCsBuilt: 0
+            });
+            const [completedMilestones, setCompletedMilestones] = useState(new Set());
+            const [showMilestoneModal, setShowMilestoneModal] = useState(false);
+            const [recentMilestone, setRecentMilestone] = useState(null);
+            
             const gameWorldRef = useRef(null);
 
             // Splash screen timer
@@ -2194,7 +2480,17 @@
             useEffect(() => {
                 const savedState = localStorage.getItem('pcClickerSave');
                 if (savedState) {
-                    const { bits: savedBits, upgrades: savedUpgrades, clickUpgrades: savedClickUpgrades, overclockerUpgrades: savedOverclockers, customPCs: savedCustomPCs, partPurchaseCounts: savedCounts, clickPower: savedClickPower } = JSON.parse(savedState);
+                    const { 
+                        bits: savedBits, 
+                        upgrades: savedUpgrades, 
+                        clickUpgrades: savedClickUpgrades, 
+                        overclockerUpgrades: savedOverclockers, 
+                        customPCs: savedCustomPCs, 
+                        partPurchaseCounts: savedCounts, 
+                        clickPower: savedClickPower,
+                        milestoneStats: savedMilestoneStats,
+                        completedMilestones: savedCompletedMilestones
+                    } = JSON.parse(savedState);
                     setBits(savedBits || 0);
                     setUpgrades(savedUpgrades || {});
                     setClickUpgrades(savedClickUpgrades || {});
@@ -2202,6 +2498,17 @@
                     setCustomPCs(savedCustomPCs || []);
                     setPartPurchaseCounts(savedCounts || {});
                     setClickPower(savedClickPower || 1);
+                    setMilestoneStats(savedMilestoneStats || {
+                        totalClicks: 0,
+                        lifetimeBits: 0,
+                        dhahabClicks: 0,
+                        threadripperClicks: 0,
+                        supplyChainsSurvived: 0,
+                        totalUpgradesPurchased: 0,
+                        totalSold: 0,
+                        customPCsBuilt: 0
+                    });
+                    setCompletedMilestones(new Set(savedCompletedMilestones || []));
                 }
             }, []);
 
@@ -2269,10 +2576,12 @@
                     overclockerUpgrades,
                     customPCs,
                     partPurchaseCounts,
-                    clickPower
+                    clickPower,
+                    milestoneStats,
+                    completedMilestones: Array.from(completedMilestones)
                 };
                 localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
-            }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower]);
+            }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower, milestoneStats, completedMilestones]);
 
             // Save zoom level
             useEffect(() => {
@@ -2352,6 +2661,11 @@
                     setSupplyChainTimeLeft(prev => {
                         if (prev <= 1) {
                             setSupplyChainActive(false);
+                            // Track surviving a supply chain crisis
+                            setMilestoneStats(prevStats => ({
+                                ...prevStats,
+                                supplyChainsSurvived: prevStats.supplyChainsSurvived + 1
+                            }));
                             return 0;
                         }
                         return prev - 1;
@@ -2428,6 +2742,31 @@
                 };
             }, [frenzyActive]);
 
+            // Check for milestone completions
+            useEffect(() => {
+                MILESTONES.forEach(milestone => {
+                    // Skip if already completed
+                    if (completedMilestones.has(milestone.id)) return;
+                    
+                    // Check if milestone is now complete
+                    const state = { totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs };
+                    if (milestone.check(milestoneStats, state)) {
+                        setCompletedMilestones(prev => new Set([...prev, milestone.id]));
+                        setRecentMilestone(milestone);
+                    }
+                });
+            }, [milestoneStats, totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs, completedMilestones]);
+
+            // Auto-dismiss milestone notification
+            useEffect(() => {
+                if (recentMilestone) {
+                    const timer = setTimeout(() => {
+                        setRecentMilestone(null);
+                    }, 5000);
+                    return () => clearTimeout(timer);
+                }
+            }, [recentMilestone]);
+
             const handlePCClick = (e) => {
                 // Disable clicking during supply chain issues
                 if (supplyChainActive) return;
@@ -2435,6 +2774,13 @@
                 const multiplier = frenzyActive ? 2 : 1;
                 const clickValue = clickPower * multiplier;
                 setBits(prev => prev + clickValue);
+                
+                // Track milestone stats
+                setMilestoneStats(prev => ({
+                    ...prev,
+                    totalClicks: prev.totalClicks + 1,
+                    lifetimeBits: prev.lifetimeBits + clickValue
+                }));
                 
                 // Create click effect
                 if (gameWorldRef.current) {
@@ -2460,11 +2806,23 @@
                 setShowDhahab(false);
                 setFrenzyActive(true);
                 setFrenzyTimeLeft(20);
+                
+                // Track dhahab clicks
+                setMilestoneStats(prev => ({
+                    ...prev,
+                    dhahabClicks: prev.dhahabClicks + 1
+                }));
             };
 
             const handleThreadripperClick = (e) => {
                 e.stopPropagation();
                 setShowThreadripper(false);
+                
+                // Track threadripper clicks
+                setMilestoneStats(prev => ({
+                    ...prev,
+                    threadripperClicks: prev.threadripperClicks + 1
+                }));
                 
                 // Double the current bits
                 let bonusBits = 0;
@@ -2506,6 +2864,12 @@
                             currentCost: Math.floor(currentUpgrade.currentCost * 1.15)
                         }
                     }));
+                    
+                    // Track purchase
+                    setMilestoneStats(prev => ({
+                        ...prev,
+                        totalUpgradesPurchased: prev.totalUpgradesPurchased + 1
+                    }));
                 }
             };
 
@@ -2523,6 +2887,12 @@
                             count: currentUpgrade.count + 1,
                             currentCost: Math.floor(currentUpgrade.currentCost * 1.15)
                         }
+                    }));
+                    
+                    // Track purchase
+                    setMilestoneStats(prev => ({
+                        ...prev,
+                        totalUpgradesPurchased: prev.totalUpgradesPurchased + 1
                     }));
                 }
             };
@@ -2548,6 +2918,12 @@
                         currentCost: newCount === 0 ? upgrade.baseCost : previousCost
                     }
                 }));
+                
+                // Track sale
+                setMilestoneStats(prev => ({
+                    ...prev,
+                    totalSold: prev.totalSold + 1
+                }));
             };
 
             const sellClickUpgrade = (upgradeId) => {
@@ -2571,6 +2947,12 @@
                         currentCost: newCount === 0 ? upgrade.baseCost : previousCost
                     }
                 }));
+                
+                // Track sale
+                setMilestoneStats(prev => ({
+                    ...prev,
+                    totalSold: prev.totalSold + 1
+                }));
             };
 
             const buyOverclocker = (overclockerId) => {
@@ -2587,6 +2969,12 @@
                             count: currentOverclocker.count + 1,
                             currentCost: currentOverclocker.currentCost * 2  // Double the cost
                         }
+                    }));
+                    
+                    // Track purchase
+                    setMilestoneStats(prevStats => ({
+                        ...prevStats,
+                        totalUpgradesPurchased: prevStats.totalUpgradesPurchased + 1
                     }));
                 }
             };
@@ -2611,6 +2999,12 @@
                         currentCost: newCount === 0 ? overclocker.baseCost : previousCost
                     }
                 }));
+                
+                // Track sale
+                setMilestoneStats(prevStats => ({
+                    ...prevStats,
+                    totalSold: prevStats.totalSold + 1
+                }));
             };
 
             const sellCustomPC = (index) => {
@@ -2629,6 +3023,12 @@
                         count: Math.max(0, (prev.custompc?.count || 0) - 1),
                         currentCost: 0
                     }
+                }));
+                
+                // Track sale
+                setMilestoneStats(prevStats => ({
+                    ...prevStats,
+                    totalSold: prevStats.totalSold + 1
                 }));
             };
 
@@ -2667,6 +3067,13 @@
                         }
                     }));
                     
+                    // Track custom PC built and purchase
+                    setMilestoneStats(prevStats => ({
+                        ...prevStats,
+                        customPCsBuilt: prevStats.customPCsBuilt + 1,
+                        totalUpgradesPurchased: prevStats.totalUpgradesPurchased + 1
+                    }));
+                    
                     closePCBuilder();
                 }
             };
@@ -2695,6 +3102,17 @@
                     setCustomPCs([]);
                     setPartPurchaseCounts({});
                     setClickEffects([]);
+                    setMilestoneStats({
+                        totalClicks: 0,
+                        lifetimeBits: 0,
+                        dhahabClicks: 0,
+                        threadripperClicks: 0,
+                        supplyChainsSurvived: 0,
+                        totalUpgradesPurchased: 0,
+                        totalSold: 0,
+                        customPCsBuilt: 0
+                    });
+                    setCompletedMilestones(new Set());
                 }
             };
 
@@ -3086,6 +3504,19 @@
                             );
                         })}
                         
+                        {/* Milestones Button */}
+                        <div style={{marginTop: '30px', textAlign: 'center'}}>
+                            <button 
+                                className="milestone-button"
+                                onClick={() => setShowMilestoneModal(true)}
+                            >
+                                🏆 VIEW MILESTONES
+                                <div className="milestone-button-count">
+                                    {completedMilestones.size}/{MILESTONES.length}
+                                </div>
+                            </button>
+                        </div>
+                        
                         {customPCs.length > 0 && <h2 style={{marginTop: '20px'}}>CUSTOM PCs</h2>}
                         {customPCs.map((pc, index) => {
                             const caseIndex = pc.parts.case;
@@ -3152,8 +3583,97 @@
                             supplyChainActive={supplyChainActive}
                         />
                     )}
+
+                    {showMilestoneModal && (
+                        <MilestoneModal 
+                            milestones={MILESTONES}
+                            completedMilestones={completedMilestones}
+                            milestoneStats={milestoneStats}
+                            totalBps={totalBps}
+                            upgrades={upgrades}
+                            clickUpgrades={clickUpgrades}
+                            overclockerUpgrades={overclockerUpgrades}
+                            customPCs={customPCs}
+                            onClose={() => setShowMilestoneModal(false)}
+                        />
+                    )}
+
+                    {recentMilestone && (
+                        <div className="milestone-notification" onClick={() => setRecentMilestone(null)}>
+                            <div className="milestone-notification-content">
+                                <div className="milestone-notification-icon">🏆</div>
+                                <div className="milestone-notification-text">
+                                    <div className="milestone-notification-title">MILESTONE COMPLETED!</div>
+                                    <div className="milestone-notification-name">{recentMilestone.icon} {recentMilestone.name}</div>
+                                    <div className="milestone-notification-desc">{recentMilestone.description}</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 </>
+            );
+        }
+
+        function MilestoneModal({ milestones, completedMilestones, milestoneStats, totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs, onClose }) {
+            const [selectedCategory, setSelectedCategory] = useState('all');
+            
+            const categories = ['all', 'progress', 'collection', 'events', 'upgrades', 'economy'];
+            
+            const filteredMilestones = selectedCategory === 'all' 
+                ? milestones 
+                : milestones.filter(m => m.category === selectedCategory);
+            
+            const completedCount = milestones.filter(m => completedMilestones.has(m.id)).length;
+            const totalCount = milestones.length;
+            
+            const state = { totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs };
+            
+            return (
+                <div className="modal-overlay" onClick={onClose}>
+                    <div className="modal-content milestone-modal-content" onClick={e => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <div className="modal-title">🏆 MILESTONES</div>
+                            <div className="milestone-count">{completedCount}/{totalCount} COMPLETED</div>
+                            <button className="close-button" onClick={onClose}>×</button>
+                        </div>
+                        
+                        <div className="milestone-categories">
+                            {categories.map(cat => (
+                                <button 
+                                    key={cat}
+                                    className={`category-tab ${selectedCategory === cat ? 'active' : ''}`}
+                                    onClick={() => setSelectedCategory(cat)}
+                                >
+                                    {cat.toUpperCase()}
+                                </button>
+                            ))}
+                        </div>
+                        
+                        <div className="milestone-list">
+                            {filteredMilestones.map(milestone => {
+                                const isCompleted = completedMilestones.has(milestone.id);
+                                const isUnlocked = milestone.check(milestoneStats, state);
+                                
+                                return (
+                                    <div 
+                                        key={milestone.id} 
+                                        className={`milestone-card ${isCompleted ? 'completed' : 'locked'}`}
+                                    >
+                                        <div className="milestone-icon">{milestone.icon}</div>
+                                        <div className="milestone-info">
+                                            <div className="milestone-name">{milestone.name}</div>
+                                            <div className="milestone-description">
+                                                {isCompleted ? milestone.description : '???'}
+                                            </div>
+                                        </div>
+                                        {isCompleted && <div className="milestone-check">✓</div>}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
             );
         }
 

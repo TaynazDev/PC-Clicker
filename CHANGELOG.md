@@ -2,6 +2,43 @@
 
 ## Latest Updates - February 20, 2026
 
+### Milestone System - Achievement Tracking 🏆
+- **40 Punny Milestones Across 5 Categories** - Track your progress with humor!
+  - **Progress Milestones (12)**: Track total clicks, lifetime bits, and BPS achievements
+    - "Click to the Future" (1K clicks) - *"Great Scott! That's a lot of clicking!"*
+    - "Bit of a Problem" (1B lifetime bits) - *"That's byte-sized dedication!"*
+    - "Core Values" (1M BPS) - *"Your CPU cores are working overtime!"*
+  - **Collection Milestones (9)**: Computer ownership and custom PC building goals
+    - "Computer Hoarder" (50 computers) - *"At this point, just open a Best Buy"*
+    - "Custom Built Different" (1 custom PC) - *"Cable management not included"*
+    - "RGB Everything" (25 custom PCs) - *"If it doesn't glow, it doesn't go!"*
+  - **Event Milestones (8)**: Special event interaction tracking
+    - "Supply and Demand Issues" (10 supply chains) - *"Sheesh, the supply company must be really bad"*
+    - "Dhahab Digger" (10 Dhahaballoons) - *"That's some serious gold mining!"*
+    - "Thread the Needle" (1 Threadripper) - *"You've got some serious thread count"*
+  - **Upgrade Milestones (3)**: Overclocker purchase milestones
+    - "Thermal Paste Enthusiast" (50 overclockers) - *"You buy it in bulk now, don't you?"*
+  - **Economy Milestones (8)**: Buying and selling achievements
+    - "Penny Pincher" (1 sale) - *"One person's trash is... still your trash"*
+    - "eBay Power Seller" (200 sales) - *"Buy high, sell low! Wait..."*
+
+- **Milestone UI Features**
+  - **🏆 View Milestones Button** in shop panel showing completion count (X/40)
+  - **Milestone Modal** with category filtering (All, Progress, Collection, Events, Upgrades, Economy)
+  - **Animated Popup Notifications** when milestones are completed
+  - **Hidden Descriptions** on locked milestones - reveals the pun on completion!
+  - **Beautiful Visual Design** with golden gradients for completed achievements
+
+- **Lifetime Stats Tracking**
+  - Tracks: Total clicks, lifetime bits earned, Dhahab clicks, Threadripper clicks
+  - Monitors: Supply chains survived, total purchases, total sales, custom PCs built
+  - Stats persist through gameplay and save/load
+  - All progress resets with "Restart Game" button
+
+---
+
+## Previous Updates - February 20, 2026
+
 ### Supply Chain Event Enhancements
 - **Increased Supply Chain Severity** - Major changes to make the event more impactful
   - **Complete Production Halt**: Changed from 50% reduction to 0% - all production stops
