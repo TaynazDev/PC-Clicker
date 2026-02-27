@@ -2,7 +2,11 @@
 
 A fun and addictive incremental clicker game where you build your tech empire by clicking on PCs, buying upgrades, and unlocking special features!
 
-## 🎮 Game Overview
+## 🎮 Play Now
+
+**[▶️ Play PC Clicker](https://taynazdev.github.io/PC-Clicker/)**
+
+## 📖 Game Overview
 
 PC Clicker is a browser-based incremental game built with React. Start by clicking on a motherboard to earn bits, then use those bits to purchase upgrades that automatically generate more bits. Build custom PCs, unlock powerful computers, and discover rare events that can skyrocket your progress!
 

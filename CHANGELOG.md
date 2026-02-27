@@ -1,6 +1,25 @@
 # PC Clicker - Change Log
 
-## Latest Updates - February 20, 2026
+## Latest Updates - February 27, 2026
+
+### Bug Fixes & UI Improvements
+- **Fixed Threadripper Click Display** - Threadripper now correctly shows the amount of bits gained (e.g., +53828) when clicked
+  - Previously showed +0 due to async state timing issue
+  - Now captures current bits value before doubling
+
+- **Removed Zoom Controls** - Simplified UI by removing zoom functionality
+  - Removed zoom in/out/reset buttons from stats panel
+  - Removed all zoom-related CSS styles and animations
+  - Removed zoom state management and localStorage persistence
+  - Game now displays at fixed 100% scale
+
+- **README Enhancement** - Added direct link to play the game
+  - Added prominent "Play Now" section with link to GitHub Pages deployment
+  - Makes it easier for visitors to find and play the game
+
+---
+
+## Previous Updates - February 20, 2026
 
 ### Milestone System - Achievement Tracking 🏆
 - **40 Punny Milestones Across 5 Categories** - Track your progress with humor!

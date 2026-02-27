@@ -121,59 +121,6 @@
             transform: scale(0.98);
         }
 
-        /* Zoom Controls */
-        .zoom-controls {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid #00ff88;
-            border-radius: 8px;
-        }
-
-        .zoom-label {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .zoom-buttons {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .zoom-button {
-            flex: 1;
-            padding: 8px;
-            background: rgba(0, 255, 136, 0.2);
-            border: 1px solid #00ff88;
-            border-radius: 5px;
-            color: #00ff88;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Courier New', monospace;
-        }
-
-        .zoom-button:hover {
-            background: rgba(0, 255, 136, 0.3);
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
-        }
-
-        .zoom-button:active {
-            transform: scale(0.95);
-        }
-
-        .zoom-display {
-            text-align: center;
-            font-size: 14px;
-            color: #00ffff;
-            font-weight: bold;
-            min-width: 50px;
-        }
-
         /* Splash Screen */
         .splash-screen {
             position: fixed;
@@ -1201,30 +1148,6 @@
             color: #ff6666;
         }
 
-        .game-container.red-theme .zoom-controls {
-            background: rgba(255, 68, 68, 0.1);
-            border: 1px solid #ff4444;
-        }
-
-        .game-container.red-theme .zoom-button {
-            background: rgba(255, 68, 68, 0.2);
-            border: 1px solid #ff4444;
-            color: #ff4444;
-        }
-
-        .game-container.red-theme .zoom-button:hover {
-            background: rgba(255, 68, 68, 0.3);
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
-        }
-
-        .game-container.red-theme .zoom-display {
-            color: #ff6666;
-        }
-
-        .game-container.red-theme .zoom-label {
-            color: #ff8888;
-        }
-
         .game-container.red-theme button:disabled {
             color: #884444;
         }
@@ -1647,10 +1570,6 @@
                 font-size: 10px;
             }
             
-            .zoom-controls {
-                display: none;
-            }
-            
             .modal-content {
                 max-width: 90%;
                 padding: 20px;
@@ -1898,23 +1817,28 @@
 
         .milestone-notification {
             position: fixed;
-            top: 50%;
+            top: 20px;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%) translateY(-150%);
             z-index: 10000;
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.98) 0%, rgba(247, 147, 30, 0.98) 100%);
             border: 3px solid #ffa500;
             border-radius: 20px;
-            padding: 30px 40px;
+            padding: 20px 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 100px rgba(255, 165, 0, 0.4);
-            cursor: pointer;
-            animation: milestonePopIn 0.5s ease-out;
+            animation: slideDownFromTop 0.5s ease-out forwards, slideUpToTop 0.5s ease-in 2.5s forwards;
             max-width: 500px;
+            pointer-events: none;
         }
 
-        @keyframes milestonePopIn {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        @keyframes slideDownFromTop {
+            0% { transform: translateX(-50%) translateY(-150%); opacity: 0; }
+            100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUpToTop {
+            0% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            100% { transform: translateX(-50%) translateY(-150%); opacity: 0; }
         }
 
         .milestone-notification-content {
@@ -2438,10 +2362,6 @@
             const [showThreadripper, setShowThreadripper] = useState(false);
             const [supplyChainActive, setSupplyChainActive] = useState(false);
             const [supplyChainTimeLeft, setSupplyChainTimeLeft] = useState(0);
-            const [zoomLevel, setZoomLevel] = useState(() => {
-                const savedZoom = localStorage.getItem('pcClickerZoom');
-                return savedZoom ? parseFloat(savedZoom) : 1.0;
-            });
             
             // Milestone system state
             const [milestoneStats, setMilestoneStats] = useState({
@@ -2582,11 +2502,6 @@
                 };
                 localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
             }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower, milestoneStats, completedMilestones]);
-
-            // Save zoom level
-            useEffect(() => {
-                localStorage.setItem('pcClickerZoom', zoomLevel.toString());
-            }, [zoomLevel]);
 
             // Random dhahab spawning (rare chance)
             useEffect(() => {
@@ -2762,7 +2677,7 @@
                 if (recentMilestone) {
                     const timer = setTimeout(() => {
                         setRecentMilestone(null);
-                    }, 5000);
+                    }, 3000);
                     return () => clearTimeout(timer);
                 }
             }, [recentMilestone]);
@@ -2825,11 +2740,8 @@
                 }));
                 
                 // Double the current bits
-                let bonusBits = 0;
-                setBits(prev => {
-                    bonusBits = prev; // Store current amount to show in effect
-                    return prev * 2;
-                });
+                const bonusBits = bits; // Store current amount to show in effect
+                setBits(prev => prev * 2);
                 
                 // Create a big click effect
                 if (gameWorldRef.current) {
@@ -3078,18 +2990,6 @@
                 }
             };
 
-            const zoomIn = () => {
-                setZoomLevel(prev => Math.min(prev + 0.1, 1.5));
-            };
-
-            const zoomOut = () => {
-                setZoomLevel(prev => Math.max(prev - 0.1, 0.5));
-            };
-
-            const resetZoom = () => {
-                setZoomLevel(1.0);
-            };
-
             const restartGame = () => {
                 if (confirm('Are you sure you want to restart? All progress will be lost!')) {
                     localStorage.removeItem('pcClickerSave');
@@ -3127,12 +3027,7 @@
                         <div className="splash-loading">Loading...</div>
                     </div>
                 )}
-                <div 
-                    className={`game-container ${supplyChainActive ? 'red-theme' : ''}`}
-                    style={{
-                        transform: `scale(${zoomLevel})`
-                    }}
-                >
+                <div className={`game-container ${supplyChainActive ? 'red-theme' : ''}`}>
                     <div className="stats-panel">
                         <h1>PC CLICKER</h1>
                         <div className="stat">
@@ -3150,15 +3045,6 @@
                         <button className="restart-button" onClick={restartGame}>
                             🔄 RESTART GAME
                         </button>
-                        <div className="zoom-controls">
-                            <div className="zoom-label">ZOOM LEVEL</div>
-                            <div className="zoom-buttons">
-                                <button className="zoom-button" onClick={zoomOut} title="Zoom Out">-</button>
-                                <div className="zoom-display">{Math.round(zoomLevel * 100)}%</div>
-                                <button className="zoom-button" onClick={zoomIn} title="Zoom In">+</button>
-                            </div>
-                            <button className="zoom-button" onClick={resetZoom} style={{ marginTop: '5px' }} title="Reset Zoom">Reset</button>
-                        </div>
                     </div>
 
                     <div className="game-world" ref={gameWorldRef}>
@@ -3599,12 +3485,12 @@
                     )}
 
                     {recentMilestone && (
-                        <div className="milestone-notification" onClick={() => setRecentMilestone(null)}>
+                        <div className="milestone-notification">
                             <div className="milestone-notification-content">
-                                <div className="milestone-notification-icon">🏆</div>
+                                <div className="milestone-notification-icon">{recentMilestone.icon}</div>
                                 <div className="milestone-notification-text">
                                     <div className="milestone-notification-title">MILESTONE COMPLETED!</div>
-                                    <div className="milestone-notification-name">{recentMilestone.icon} {recentMilestone.name}</div>
+                                    <div className="milestone-notification-name">{recentMilestone.name}</div>
                                     <div className="milestone-notification-desc">{recentMilestone.description}</div>
                                 </div>
                             </div>
