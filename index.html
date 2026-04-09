@@ -2214,74 +2214,6 @@
             }
         ];
 
-        // Computer Overclocker Upgrades
-        const OVERCLOCKER_UPGRADES = [
-            {
-                id: 'oldpc_overclock',
-                name: 'Really Old PC Overclocker',
-                baseCost: 100,
-                targetComputer: 'oldpc',
-                icon: '⚡',
-                description: 'Doubles Really Old PC production'
-            },
-            {
-                id: 'raspberrypi_overclock',
-                name: 'Raspberry Pi Overclocker',
-                baseCost: 500,
-                targetComputer: 'raspberrypi',
-                icon: '⚡',
-                description: 'Doubles Raspberry Pi production'
-            },
-            {
-                id: 'custompc_overclock',
-                name: 'Custom PC Overclocker',
-                baseCost: 5000,
-                targetComputer: 'custompc',
-                icon: '⚡',
-                description: 'Doubles Custom PC production'
-            },
-            {
-                id: 'server_overclock',
-                name: 'Server Overclocker',
-                baseCost: 50000,
-                targetComputer: 'server',
-                icon: '⚡',
-                description: 'Doubles Server production'
-            },
-            {
-                id: 'datacenter_overclock',
-                name: 'Data Center Overclocker',
-                baseCost: 300000,
-                targetComputer: 'datacenter',
-                icon: '⚡',
-                description: 'Doubles Data Center production'
-            },
-            {
-                id: 'supercomputer_overclock',
-                name: 'Supercomputer Overclocker',
-                baseCost: 1500000,
-                targetComputer: 'supercomputer',
-                icon: '⚡',
-                description: 'Doubles Supercomputer production'
-            },
-            {
-                id: 'quantum_overclock',
-                name: 'Quantum Computer Overclocker',
-                baseCost: 15000000,
-                targetComputer: 'quantum',
-                icon: '⚡',
-                description: 'Doubles Quantum Computer production'
-            },
-            {
-                id: 'everything_overclock',
-                name: 'Everything Overclocker',
-                baseCost: 100000000000,
-                targetComputer: 'everything',
-                icon: '⚡',
-                description: 'Doubles Everything production'
-            }
-        ];
-
         const MILESTONES = [
             // Progress Milestones
             { id: 'first_click', name: 'Baby Steps', description: 'Made your first click. Welcome to the addiction!', category: 'progress', icon: '👆', check: (stats) => stats.totalClicks >= 1 },
@@ -2326,11 +2258,6 @@
             { id: 'supply_chain_10', name: 'Supply and Demand Issues', description: 'Sheesh, the supply company must be really bad', category: 'events', icon: '🚛', check: (stats) => stats.supplyChainsSurvived >= 10 },
             { id: 'supply_chain_25', name: 'Crisis Management', description: 'You should update your resume with this skill', category: 'events', icon: '📋', check: (stats) => stats.supplyChainsSurvived >= 25 },
             
-            // Upgrade Milestones
-            { id: 'overclocker_1', name: 'Mild Overclock', description: 'Bought your first overclocker. Time to void some warranties!', category: 'upgrades', icon: '⚡', check: (stats, state) => Object.values(state.overclockerUpgrades).some(u => u.count > 0) },
-            { id: 'overclocker_10', name: 'Overclocking Addiction', description: 'Stock speeds are for cowards!', category: 'upgrades', icon: '🔥', check: (stats, state) => Object.values(state.overclockerUpgrades).reduce((sum, u) => sum + u.count, 0) >= 10 },
-            { id: 'overclocker_50', name: 'Thermal Paste Enthusiast', description: 'You buy it in bulk now, don\'t you?', category: 'upgrades', icon: '🧴', check: (stats, state) => Object.values(state.overclockerUpgrades).reduce((sum, u) => sum + u.count, 0) >= 50 },
-            
             // Economy Milestones
             { id: 'first_purchase', name: 'Buyer\'s Remorse', description: 'Bought something! Let\'s hope it was worth it', category: 'economy', icon: '💳', check: (stats) => stats.totalUpgradesPurchased >= 1 },
             { id: 'purchases_50', name: 'Shopping Spree', description: 'Money can\'t buy happiness, but it can buy computers!', category: 'economy', icon: '🛒', check: (stats) => stats.totalUpgradesPurchased >= 50 },
@@ -2349,7 +2276,6 @@
             const [clickPower, setClickPower] = useState(1);
             const [upgrades, setUpgrades] = useState({});
             const [clickUpgrades, setClickUpgrades] = useState({});
-            const [overclockerUpgrades, setOverclockerUpgrades] = useState({});
             const [customPCs, setCustomPCs] = useState([]);
             const [partPurchaseCounts, setPartPurchaseCounts] = useState({});
             const [showBuilder, setShowBuilder] = useState(false);
@@ -2404,7 +2330,6 @@
                         bits: savedBits, 
                         upgrades: savedUpgrades, 
                         clickUpgrades: savedClickUpgrades, 
-                        overclockerUpgrades: savedOverclockers, 
                         customPCs: savedCustomPCs, 
                         partPurchaseCounts: savedCounts, 
                         clickPower: savedClickPower,
@@ -2414,7 +2339,6 @@
                     setBits(savedBits || 0);
                     setUpgrades(savedUpgrades || {});
                     setClickUpgrades(savedClickUpgrades || {});
-                    setOverclockerUpgrades(savedOverclockers || {});
                     setCustomPCs(savedCustomPCs || []);
                     setPartPurchaseCounts(savedCounts || {});
                     setClickPower(savedClickPower || 1);
@@ -2447,18 +2371,9 @@
             useEffect(() => {
                 let total = 0;
                 
-                // Regular upgrades with overclocker multipliers
                 BASE_UPGRADES.forEach(upgrade => {
                     if (!upgrade.isCustom && upgrades[upgrade.id]) {
                         let bps = upgrade.baseBps * upgrades[upgrade.id].count;
-                        
-                        // Apply overclocker multiplier (each overclocker doubles the production)
-                        const overclockerId = `${upgrade.id}_overclock`;
-                        const overclockerCount = overclockerUpgrades[overclockerId]?.count || 0;
-                        if (overclockerCount > 0) {
-                            bps *= Math.pow(2, overclockerCount);
-                        }
-                        
                         total += bps;
                     }
                 });
@@ -2474,7 +2389,7 @@
                 }
 
                 setTotalBps(total);
-            }, [upgrades, customPCs, overclockerUpgrades, supplyChainActive]);
+            }, [upgrades, customPCs, supplyChainActive]);
 
             // Passive income (update 10 times per second)
             useEffect(() => {
@@ -2493,7 +2408,6 @@
                     bits,
                     upgrades,
                     clickUpgrades,
-                    overclockerUpgrades,
                     customPCs,
                     partPurchaseCounts,
                     clickPower,
@@ -2501,7 +2415,7 @@
                     completedMilestones: Array.from(completedMilestones)
                 };
                 localStorage.setItem('pcClickerSave', JSON.stringify(saveState));
-            }, [bits, upgrades, clickUpgrades, overclockerUpgrades, customPCs, partPurchaseCounts, clickPower, milestoneStats, completedMilestones]);
+            }, [bits, upgrades, clickUpgrades, customPCs, partPurchaseCounts, clickPower, milestoneStats, completedMilestones]);
 
             // Random dhahab spawning (rare chance)
             useEffect(() => {
@@ -2664,13 +2578,13 @@
                     if (completedMilestones.has(milestone.id)) return;
                     
                     // Check if milestone is now complete
-                    const state = { totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs };
+                    const state = { totalBps, upgrades, clickUpgrades, customPCs };
                     if (milestone.check(milestoneStats, state)) {
                         setCompletedMilestones(prev => new Set([...prev, milestone.id]));
                         setRecentMilestone(milestone);
                     }
                 });
-            }, [milestoneStats, totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs, completedMilestones]);
+            }, [milestoneStats, totalBps, upgrades, clickUpgrades, customPCs, completedMilestones]);
 
             // Auto-dismiss milestone notification
             useEffect(() => {
@@ -2867,58 +2781,6 @@
                 }));
             };
 
-            const buyOverclocker = (overclockerId) => {
-                const overclocker = OVERCLOCKER_UPGRADES.find(u => u.id === overclockerId);
-                if (!overclocker) return;
-
-                const currentOverclocker = overclockerUpgrades[overclockerId] || { count: 0, currentCost: overclocker.baseCost };
-                
-                if (bits >= currentOverclocker.currentCost) {
-                    setBits(prev => prev - currentOverclocker.currentCost);
-                    setOverclockerUpgrades(prev => ({
-                        ...prev,
-                        [overclockerId]: {
-                            count: currentOverclocker.count + 1,
-                            currentCost: currentOverclocker.currentCost * 2  // Double the cost
-                        }
-                    }));
-                    
-                    // Track purchase
-                    setMilestoneStats(prevStats => ({
-                        ...prevStats,
-                        totalUpgradesPurchased: prevStats.totalUpgradesPurchased + 1
-                    }));
-                }
-            };
-
-            const sellOverclocker = (overclockerId) => {
-                const overclocker = OVERCLOCKER_UPGRADES.find(u => u.id === overclockerId);
-                if (!overclocker) return;
-
-                const currentOverclocker = overclockerUpgrades[overclockerId];
-                if (!currentOverclocker || currentOverclocker.count === 0) return;
-
-                // Calculate sell price (50% of current cost before this overclocker was bought)
-                const previousCost = Math.max(overclocker.baseCost, Math.floor(currentOverclocker.currentCost / 2));
-                const sellPrice = Math.floor(previousCost * 0.5);
-                const newCount = currentOverclocker.count - 1;
-                
-                setBits(prev => prev + sellPrice);
-                setOverclockerUpgrades(prev => ({
-                    ...prev,
-                    [overclockerId]: {
-                        count: newCount,
-                        currentCost: newCount === 0 ? overclocker.baseCost : previousCost
-                    }
-                }));
-                
-                // Track sale
-                setMilestoneStats(prevStats => ({
-                    ...prevStats,
-                    totalSold: prevStats.totalSold + 1
-                }));
-            };
-
             const sellCustomPC = (index) => {
                 if (index < 0 || index >= customPCs.length) return;
                 
@@ -2998,7 +2860,6 @@
                     setClickPower(1);
                     setUpgrades({});
                     setClickUpgrades({});
-                    setOverclockerUpgrades({});
                     setCustomPCs([]);
                     setPartPurchaseCounts({});
                     setClickEffects([]);
@@ -3314,82 +3175,6 @@
                             );
                         })}
                         
-                        <h2 style={{marginTop: '20px'}}>COMPUTER OVERCLOCKERS</h2>
-                        {supplyChainActive && (
-                            <div style={{
-                                background: 'rgba(220, 20, 60, 0.3)',
-                                border: '2px solid #ff4444',
-                                borderRadius: '8px',
-                                padding: '12px',
-                                marginBottom: '15px',
-                                textAlign: 'center',
-                                color: '#ff8888',
-                                fontSize: '14px',
-                                fontWeight: 'bold'
-                            }}>
-                                ⚠️ PURCHASES DISABLED<br/>
-                                <span style={{fontSize: '12px', opacity: 0.8}}>Supply chain issues active</span>
-                            </div>
-                        )}
-                        {OVERCLOCKER_UPGRADES.map(overclocker => {
-                            // Hide everything overclocker until everything computer is bought
-                            if (overclocker.id === 'everything_overclock') {
-                                const everythingCount = upgrades['everything']?.count || 0;
-                                if (everythingCount === 0) return null;
-                            }
-                            
-                            const currentOverclocker = overclockerUpgrades[overclocker.id] || { 
-                                count: 0, 
-                                currentCost: overclocker.baseCost 
-                            };
-                            const canAfford = bits >= currentOverclocker.currentCost;
-                            
-                            // Check if player owns the target computer
-                            const targetComputerCount = upgrades[overclocker.targetComputer]?.count || 0;
-                            const hasTargetComputer = targetComputerCount > 0;
-
-                            return (
-                                <div key={overclocker.id} className="upgrade-item">
-                                    <div className="upgrade-header">
-                                        <div className="upgrade-icon">{overclocker.icon}</div>
-                                        <div className="upgrade-info">
-                                            <div className="upgrade-name">{overclocker.name}</div>
-                                            <div className="upgrade-details">{overclocker.description}</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="upgrade-stats">
-                                        <div>Owned: {currentOverclocker.count}</div>
-                                        <div>Multiplier: x{Math.pow(2, currentOverclocker.count)}</div>
-                                    </div>
-                                    
-                                    {!hasTargetComputer && (
-                                        <div style={{color: '#ff6b6b', fontSize: '12px', marginBottom: '8px'}}>
-                                            ⚠️ Requires owning target computer
-                                        </div>
-                                    )}
-                                    
-                                    <button 
-                                        className="buy-button"
-                                        onClick={() => buyOverclocker(overclocker.id)}
-                                        disabled={!canAfford || !hasTargetComputer || supplyChainActive}
-                                    >
-                                        BUY - {formatNumber(currentOverclocker.currentCost)} bits
-                                    </button>
-                                    
-                                    {currentOverclocker.count > 0 && (
-                                        <button 
-                                            className="sell-button"
-                                            onClick={() => sellOverclocker(overclocker.id)}
-                                            disabled={supplyChainActive}
-                                        >
-                                            SELL - +{formatNumber(Math.floor((currentOverclocker.currentCost / 2) * 0.5))} bits
-                                        </button>
-                                    )}
-                                </div>
-                            );
-                        })}
-                        
                         {/* Milestones Button */}
                         <div style={{marginTop: '30px', textAlign: 'center'}}>
                             <button 
@@ -3478,7 +3263,6 @@
                             totalBps={totalBps}
                             upgrades={upgrades}
                             clickUpgrades={clickUpgrades}
-                            overclockerUpgrades={overclockerUpgrades}
                             customPCs={customPCs}
                             onClose={() => setShowMilestoneModal(false)}
                         />
@@ -3501,7 +3285,7 @@
             );
         }
 
-        function MilestoneModal({ milestones, completedMilestones, milestoneStats, totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs, onClose }) {
+        function MilestoneModal({ milestones, completedMilestones, milestoneStats, totalBps, upgrades, clickUpgrades, customPCs, onClose }) {
             const [selectedCategory, setSelectedCategory] = useState('all');
             
             const categories = ['all', 'progress', 'collection', 'events', 'upgrades', 'economy'];
@@ -3513,7 +3297,7 @@
             const completedCount = milestones.filter(m => completedMilestones.has(m.id)).length;
             const totalCount = milestones.length;
             
-            const state = { totalBps, upgrades, clickUpgrades, overclockerUpgrades, customPCs };
+            const state = { totalBps, upgrades, clickUpgrades, customPCs };
             
             return (
                 <div className="modal-overlay" onClick={onClose}>

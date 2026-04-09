@@ -1,6 +1,19 @@
 # PC Clicker - Change Log
 
-## Latest Updates - February 27, 2026
+## Latest Updates - April 9, 2026
+
+### Removed Features
+- **Removed Computer Overclockers** - Simplified the upgrade shop by cutting the overclocker system entirely
+  - Removed `OVERCLOCKER_UPGRADES` constant and all 8 overclocker entries
+  - Removed `overclockerUpgrades` state, save/load, and reset logic
+  - Removed BPS multiplier logic tied to overclocker counts
+  - Removed `buyOverclocker` and `sellOverclocker` functions
+  - Removed "COMPUTER OVERCLOCKERS" UI section from the shop panel
+  - Removed 3 overclocker-related milestones ("Mild Overclock", "Overclocking Addiction", "Thermal Paste Enthusiast")
+
+---
+
+## Previous Updates - February 27, 2026
 
 ### Bug Fixes & UI Improvements
 - **Fixed Threadripper Click Display** - Threadripper now correctly shows the amount of bits gained (e.g., +53828) when clicked
