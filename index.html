@@ -2021,6 +2021,14 @@
 
         // PC Parts data
         const PC_PARTS = {
+            motherboard: [
+                { name: 'H610', cost: 80, bps: 40 },
+                { name: 'B660', cost: 150, bps: 120 },
+                { name: 'B760', cost: 250, bps: 225 },
+                { name: 'Z690', cost: 400, bps: 440 },
+                { name: 'Z790', cost: 600, bps: 880 },
+                { name: 'X670E', cost: 900, bps: 1440 }
+            ],
             cpu: [
                 { name: 'AMD Athlon', cost: 50, bps: 50 },
                 { name: 'AMD Ryzen 3', cost: 150, bps: 120 },
@@ -2028,6 +2036,14 @@
                 { name: 'AMD Ryzen 7', cost: 500, bps: 550 },
                 { name: 'AMD Ryzen 9', cost: 800, bps: 1200 },
                 { name: 'AMD Threadripper', cost: 1500, bps: 2400 }
+            ],
+            storage: [
+                { name: '500GB HDD', cost: 40, bps: 35 },
+                { name: '1TB HDD', cost: 60, bps: 55 },
+                { name: '500GB SATA SSD', cost: 100, bps: 120 },
+                { name: '1TB NVMe SSD', cost: 200, bps: 240 },
+                { name: '2TB NVMe SSD', cost: 400, bps: 520 },
+                { name: '4TB NVMe SSD', cost: 800, bps: 1120 }
             ],
             gpu: [
                 { name: 'Integrated Graphics', cost: 0, bps: 0 },
@@ -2045,21 +2061,13 @@
                 { name: '64GB DDR5', cost: 500, bps: 720 },
                 { name: '128GB DDR5', cost: 1000, bps: 1600 }
             ],
-            storage: [
-                { name: '500GB HDD', cost: 40, bps: 35 },
-                { name: '1TB HDD', cost: 60, bps: 55 },
-                { name: '500GB SATA SSD', cost: 100, bps: 120 },
-                { name: '1TB NVMe SSD', cost: 200, bps: 240 },
-                { name: '2TB NVMe SSD', cost: 400, bps: 520 },
-                { name: '4TB NVMe SSD', cost: 800, bps: 1120 }
-            ],
-            motherboard: [
-                { name: 'Basic H610', cost: 80, bps: 40 },
-                { name: 'B660', cost: 150, bps: 120 },
-                { name: 'B760', cost: 250, bps: 225 },
-                { name: 'Z690', cost: 400, bps: 440 },
-                { name: 'Z790', cost: 600, bps: 880 },
-                { name: 'X670E Enthusiast', cost: 900, bps: 1440 }
+            cooling: [
+                { name: 'Stock Cooler', cost: 0, bps: 0 },
+                { name: 'Tower Air Cooler', cost: 40, bps: 40 },
+                { name: 'Large Tower Cooler', cost: 80, bps: 80 },
+                { name: '240mm AIO', cost: 130, bps: 145 },
+                { name: '360mm AIO', cost: 200, bps: 280 },
+                { name: 'Custom Loop', cost: 400, bps: 560 }
             ],
             psu: [
                 { name: '450W Bronze', cost: 50, bps: 25 },
@@ -2075,14 +2083,6 @@
                 { name: 'RGB Mid Tower', cost: 200, bps: 280, image: './assets/images/mid%20tower%20with%20rgb.png' },
                 { name: 'Full Tower', cost: 300, bps: 145, image: './assets/images/full%20tower.png' },
                 { name: 'Premium RGB Full Tower', cost: 500, bps: 560, image: './assets/images/premium%20rgb%20full%20tower.png' }
-            ],
-            cooling: [
-                { name: 'Stock Cooler', cost: 0, bps: 0 },
-                { name: 'Tower Air Cooler', cost: 40, bps: 40 },
-                { name: 'Large Tower Cooler', cost: 80, bps: 80 },
-                { name: '240mm AIO', cost: 130, bps: 145 },
-                { name: '360mm AIO', cost: 200, bps: 280 },
-                { name: 'Custom Loop', cost: 400, bps: 560 }
             ]
         };
 
@@ -3349,14 +3349,14 @@
 
         function PCBuilderModal({ bits, partPurchaseCounts, onClose, onBuild, supplyChainActive }) {
             const [selectedParts, setSelectedParts] = useState({
+                motherboard: null,
                 cpu: null,
+                storage: null,
                 gpu: null,
                 ram: null,
-                storage: null,
-                motherboard: null,
+                cooling: null,
                 psu: null,
-                case: null,
-                cooling: null
+                case: null
             });
 
             const selectPart = (category, index) => {
@@ -3419,17 +3419,21 @@
 
                         <div className="pc-builder">
                             <div className="parts-selection">
-                                {Object.keys(PC_PARTS).map(category => (
-                                    <div key={category} className="part-category">
+                                {Object.keys(PC_PARTS).map((category, catIndex) => {
+                                    const prevCategory = catIndex > 0 ? Object.keys(PC_PARTS)[catIndex - 1] : null;
+                                    const isLocked = prevCategory !== null && selectedParts[prevCategory] === null;
+                                    return (
+                                    <div key={category} className="part-category" style={{opacity: isLocked ? 0.4 : 1}}>
                                         <div className="part-category-title">
-                                            {category.toUpperCase()}
+                                            {category.toUpperCase()}{isLocked ? ' 🔒' : ''}
                                         </div>
                                         <div className="part-options">
                                             {PC_PARTS[category].map((part, index) => (
                                                 <div
                                                     key={index}
                                                     className={`part-option ${selectedParts[category] === index ? 'selected' : ''}`}
-                                                    onClick={() => selectPart(category, index)}
+                                                    onClick={() => { if (!isLocked) selectPart(category, index); }}
+                                                    style={{cursor: isLocked ? 'not-allowed' : 'pointer'}}
                                                 >
                                                     <div className="part-info">
                                                         {part.image && <img src={part.image} alt={part.name} className="part-image" />}
@@ -3442,11 +3446,20 @@
                                             ))}
                                         </div>
                                     </div>
-                                ))}
+                                    );
+                                })}
                             </div>
 
                             <div className="build-summary">
-                                <div className="build-preview">🔧</div>
+                                <div className="build-preview" style={{position: 'relative'}}>
+                                    {selectedParts.case !== null
+                                        ? <img src={PC_PARTS.case[selectedParts.case].image} alt="Case" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                                        : selectedParts.motherboard !== null
+                                        ? <>
+                                            <img src={selectedParts.cooling !== null && selectedParts.gpu !== null && selectedParts.gpu !== 0 ? "./assets/images/coolerwg.png" : selectedParts.cooling !== null ? "./assets/images/coolerng.png" : selectedParts.ram !== null && selectedParts.gpu !== null && selectedParts.gpu !== 0 ? "./assets/images/motherwgwr.png" : selectedParts.ram !== null ? "./assets/images/ramng.png" : selectedParts.gpu !== null && selectedParts.gpu !== 0 ? "./assets/images/motherwgpu.png" : selectedParts.cpu !== null ? "./assets/images/motherboardwcpu.png" : "./assets/images/empty%20motherboard.jpg"} alt="Motherboard" style={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                                          </>
+                                        : '🔧'}
+                                </div>
                                 
                                 <div className="build-stats">
                                     <div className="build-stat">

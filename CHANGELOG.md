@@ -1,6 +1,24 @@
 # PC Clicker - Change Log
 
-## Latest Updates - April 9, 2026
+## Latest Updates - May 3, 2026
+
+### Custom PC Builder Improvements
+- **Ordered Part Selection** - Parts must now be selected in sequence; locked categories are greyed out with a 🔒 until the previous part is chosen
+- **Reordered Parts** - Build order is now: Motherboard → CPU → Storage → GPU → RAM → Cooling → PSU → Case
+- **Live Motherboard Preview** - The build preview updates with a new image at each stage:
+  - Motherboard selected → `empty motherboard.jpg`
+  - CPU added → `motherboardwcpu.png`
+  - GPU (dedicated) added → `motherwgpu.png`
+  - RAM added (no GPU) → `ramng.png`
+  - RAM added (with GPU) → `motherwgwr.png`
+  - Cooler added (no GPU) → `coolerng.png`
+  - Cooler added (with GPU) → `coolerwg.png`
+  - Case selected → chosen case image
+- **Removed Storage from old position** - Storage was reordered to sit between CPU and GPU
+
+---
+
+## Previous Updates - April 9, 2026
 
 ### Removed Features
 - **Removed Computer Overclockers** - Simplified the upgrade shop by cutting the overclocker system entirely
