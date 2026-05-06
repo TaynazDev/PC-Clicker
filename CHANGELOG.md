@@ -1,5 +1,14 @@
 # PC Clicker - Change Log
 
+## Latest Updates - May 6, 2026
+
+### Browser Icon Update
+- **Added Favicon Support** - Browser tabs and favorites/bookmarks now use `icon.png`
+  - Added favicon link in `index.html` head: `<link rel="icon" type="image/png" href="./icon.png">`
+  - Included `icon.png` at the project root for consistent browser icon display
+
+---
+
 ## Latest Updates - May 3, 2026
 
 ### Custom PC Builder Improvements
