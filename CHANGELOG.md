@@ -2,6 +2,12 @@
 
 ## Latest Updates - May 6, 2026
 
+### Typography Update
+- **Switched UI Font to Turret Road** - Updated the game-wide typeface to a futuristic style
+  - Replaced external font import in `index.html` to use Google Fonts Turret Road
+  - Centralized UI typography through the shared CSS variable used across panels and buttons
+  - Applied global font inheritance so all UI text consistently uses the new font
+
 ### Browser Icon Update
 - **Added Favicon Support** - Browser tabs and favorites/bookmarks now use `icon.png`
   - Added favicon link in `index.html` head: `<link rel="icon" type="image/png" href="./icon.png">`

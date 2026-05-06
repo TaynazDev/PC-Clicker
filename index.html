@@ -9,14 +9,21 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Turret+Road:wght@400;700;800&display=swap');
+
+        :root {
+            --ui-font: 'Turret Road', 'Courier New', monospace;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: var(--ui-font);
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
             background: url('./assets/images/36013.gif') center/cover no-repeat fixed;
             color: #00ff88;
             overflow: hidden;
@@ -109,7 +116,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
         }
 
         .restart-button:hover {
@@ -495,7 +502,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
         }
 
         .buy-button:hover:not(:disabled), .customize-button:hover {
@@ -526,7 +533,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
             margin-top: 5px;
         }
 
@@ -771,7 +778,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
             margin-top: 10px;
         }
 
@@ -1796,7 +1803,7 @@
             border: 2px solid #ffa500;
             border-radius: 12px;
             color: #fff;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -1903,7 +1910,7 @@
             border: 2px solid #00ff88;
             border-radius: 8px;
             color: #00ff88;
-            font-family: 'Courier New', monospace;
+            font-family: var(--ui-font);
             font-size: 12px;
             font-weight: bold;
             cursor: pointer;
